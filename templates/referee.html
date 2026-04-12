@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Referee Dashboard</title>
+</head>
+<body>
+    <h1>Referee Portal</h1>
+
+    <section>
+        <h2>Submit Match Report</h2>
+        <form action="/submit-result" method="POST">
+            <label>Match ID:</label><input type="text" name="match_id" required><br>
+            <label>Attendance:</label><input type="number" name="attendance" required><br> [cite: 92]
+            <label>Score (Home - Away):</label>
+            <input type="number" name="home_goals"> - <input type="number" name="away_goals"><br>
+            
+            <h3>Player Performance</h3>
+            <p>(Submit goals, assists, cards, and rating for each participant)</p> [cite: 92]
+            <textarea name="player_stats" placeholder="PlayerID, Goals, Assists, Yellow, Red, Rating, Minutes"></textarea><br>
+            <button type="submit">Submit Final Report</button>
+        </form>
+        <small>Note: Results can only be submitted after the match time has passed.</small> [cite: 92]
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Match History & Stats</h2>
+        <p>Total Red Cards Issued: [SQL Count]</p>
+        <p>Total Yellow Cards Issued: [SQL Count]</p> [cite: 94]
+        <table border="1">
+            <tr>
+                <th>Date</th><th>Competition</th><th>Stadium</th><th>Status/Result</th>
+            </tr> [cite: 96, 97]
+            </table> [cite: 98]
+    </section>
+</body>
+</html>

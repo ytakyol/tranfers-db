@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Player Dashboard</title>
+</head>
+<body>
+    <h1>Player Profile</h1>
+    
+    <section>
+        <h2>Personal Details</h2>
+        <p>Market Value: [From SQL]</p>
+        <p>Main Position: [From SQL]</p>
+        <p>Strong Foot: [From SQL]</p> [cite: 44]
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Performance Statistics</h2>
+        <form action="/player/stats" method="GET">
+            <select name="filter_type">
+                <option value="career">Career Aggregation</option> [cite: 101]
+                <option value="season">Seasonal</option> [cite: 102]
+                <option value="competition">Competition & Season</option> [cite: 103]
+            </select>
+            <input type="text" name="season" placeholder="2025/2026">
+            <button type="submit">View Stats</button>
+        </form>
+        <ul>
+            <li>Games Played: [SQL Result]</li>
+            <li>Goals: [SQL Result]</li>
+            <li>Assists: [SQL Result]</li>
+            <li>Cards (Y/R): [SQL Result]</li>
+            <li>Avg Rating: [SQL Result]</li> [cite: 100]
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Contract & Transfer History</h2>
+        <h3>Contracts</h3>
+        <table border="1">
+            <tr><th>Club</th><th>Salary</th><th>Type</th><th>Start</th><th>End</th></tr> [cite: 107]
+        </table>
+        <h3>Transfers</h3>
+        <table border="1">
+            <tr><th>Date</th><th>Fee</th><th>From</th><th>To</th></tr> [cite: 108]
+        </table>
+    </section>
+</body>
+</html>

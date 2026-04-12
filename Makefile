@@ -5,5 +5,5 @@ default: main
 install:
 	pip install -r requirements.txt
 
-main: backend/main.py 
-	python3 backend/main.py
+main: app/app.py 
+	python3 app/app.py

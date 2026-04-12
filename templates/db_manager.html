@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DB Manager Dashboard</title>
+</head>
+<body>
+    <h1>Database Manager Dashboard</h1>
+    <nav>
+        <a href="#stadiums">View Stadiums</a> | 
+        <a href="#schedule">Schedule Match</a> | 
+        <a href="#transfers">Register Transfer</a>
+    </nav>
+
+    <h2 id="stadiums">Stadiums</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>Capacity</th>
+                <th>Home Club(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Old Trafford</td>
+                <td>Manchester</td>
+                <td>74,000</td>
+                <td>Manchester United</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="schedule">Schedule a New Match</h2>
+    <form action="/schedule-match" method="POST">
+        <label>Date (YYYY-MM-DD):</label>
+        <input type="text" name="match_date" placeholder="2026-05-20" required><br>
+        <label>Stadium:</label>
+        <input type="text" name="stadium_id" required><br>
+        <label>Referee ID:</label>
+        <input type="text" name="referee_id" required><br>
+        <button type="submit">Schedule Match</button>
+    </form>
+
+    <h2 id="transfers">Register Player Transfer</h2>
+    <form action="/transfer" method="POST">
+        <label>Player Name:</label>
+        <input type="text" name="player_id" required><br>
+        <label>Destination Club:</label>
+        <input type="text" name="club_id" required><br>
+        <label>Transfer Fee:</label>
+        <input type="number" name="fee" required><br>
+        <button type="submit">Complete Transfer</button>
+    </form>
+</body>
+</html>

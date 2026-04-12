@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TransferDB - Login</title>
+</head>
+<body>
+    <h1>TransferDB Login</h1>
+    <form action="/login" method="POST">
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <hr>
+
+    <h2>Register New User</h2>
+    <form action="/signup" method="POST">
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+        
+        <label>Role:</label><br>
+        <select name="role">
+            <option value="db_manager">Database Manager</option>
+            <option value="player">Player</option>
+            <option value="manager">Manager</option>
+            <option value="referee">Referee</option>
+        </select><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required>
+        <small>(Min 8 chars, 1 Upper, 1 Lower, 1 Digit, 1 Special)</small><br><br>
+        
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>
