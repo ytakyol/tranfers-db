@@ -1,23 +1,6 @@
-DROP TABLE IF EXISTS db_managers;
-DROP TABLE IF EXISTS match_stats;
-DROP TABLE IF EXISTS matches;
-drop TABLE IF EXISTS participates;
-DROP TABLE IF EXISTS transfer_record;
-DROP TABLE IF EXISTS contracts;
-DROP TABLE IF EXISTS clubs;
-DROP TABLE IF EXISTS players;
-DROP TABLE IF EXISTS managers;
-DROP TABLE IF EXISTS referees;
-DROP TABLE IF EXISTS persons;
-DROP TABLE IF EXISTS stadiums;
-
-
-DROP TABLE IF EXISTS competitions;
-
-
-
-
-
+DROP DATABASE IF EXISTS transfer_db;
+CREATE DATABASE transfer_db;
+USE transfer_db;
 
 CREATE TABLE db_managers (
 username VARCHAR(50) PRIMARY KEY,
