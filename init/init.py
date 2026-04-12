@@ -3,6 +3,9 @@ from fileinput import filename
 import pandas as pd
 import mysql.connector
 import hashlib
+import execute_schema
+
+execute_schema.initialize_database('database/schema.sql')
 
 db_config = {
     'host': 'localhost',
@@ -114,6 +117,6 @@ def import_all(file_path):
             conn.close()
 
 if __name__ == "__main__":
-    import_all('initial_data.xlsx')
+    import_all('init/initial_data.xlsx')
     print("Data import process completed.")
     

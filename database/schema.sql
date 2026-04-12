@@ -1,7 +1,28 @@
-DROP DATABASE transfer_db;
-CREATE DATABASE transfer_db;
-USE transfer_db;
--- Can not enforce disjoint property without extra attributes
+DROP TABLE IF EXISTS db_managers;
+DROP TABLE IF EXISTS match_stats;
+DROP TABLE IF EXISTS matches;
+drop TABLE IF EXISTS participates;
+DROP TABLE IF EXISTS transfer_record;
+DROP TABLE IF EXISTS contracts;
+DROP TABLE IF EXISTS clubs;
+DROP TABLE IF EXISTS players;
+DROP TABLE IF EXISTS managers;
+DROP TABLE IF EXISTS referees;
+DROP TABLE IF EXISTS persons;
+DROP TABLE IF EXISTS stadiums;
+
+
+DROP TABLE IF EXISTS competitions;
+
+
+
+
+
+
+CREATE TABLE db_managers (
+username VARCHAR(50) PRIMARY KEY,
+password VARCHAR(255) NOT NULL
+);
 CREATE TABLE persons (
 person_ID INT AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(50) UNIQUE NOT NULL,
@@ -21,6 +42,7 @@ FOREIGN KEY (person_ID) REFERENCES persons(person_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
+
 CREATE TABLE managers (
 person_ID INT PRIMARY KEY,
 preferred_formation VARCHAR(10),
@@ -29,6 +51,7 @@ FOREIGN KEY (person_ID) REFERENCES persons(person_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
+
 CREATE TABLE referees (
 person_ID INT PRIMARY KEY,
 license_level VARCHAR(50) NOT NULL,
@@ -37,7 +60,7 @@ FOREIGN KEY (person_ID) REFERENCES persons(person_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
--- People have finsihed
+
 CREATE TABLE stadiums (
 stadium_ID INT AUTO_INCREMENT PRIMARY KEY,
 stadium_name VARCHAR(100) NOT NULL,
@@ -59,6 +82,7 @@ FOREIGN KEY (stadium_name, city) REFERENCES stadiums(stadium_name, city)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
+
 CREATE TABLE competitions (
 competition_ID INT AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(100) NOT NULL,
@@ -67,8 +91,7 @@ country VARCHAR(50) NOT NULL,
 competition_type VARCHAR(50) NOT NULL,
 UNIQUE (name, season)
 );
--- Can not show loan constraint, non deletability, no 2 active smae type of
--- contracts, loan contracts needing a permanent contracts
+
 CREATE TABLE contracts (
 contract_id INT AUTO_INCREMENT PRIMARY KEY,
 player_id INT NOT NULL,
@@ -83,9 +106,8 @@ ON UPDATE CASCADE,
 FOREIGN KEY (club_id) REFERENCES clubs(club_ID)
 ON DELETE RESTRICT
 ON UPDATE CASCADE
--- CHECK (end_date > start_date)
 );
--- Can not do: checking if players is currently playing at from_club_id.
+
 CREATE TABLE transfer_record (
 transfer_id INT AUTO_INCREMENT PRIMARY KEY,
 player_id INT NOT NULL,
@@ -103,11 +125,10 @@ ON UPDATE CASCADE,
 FOREIGN KEY (to_club_id) REFERENCES clubs(club_ID)
 ON DELETE RESTRICT
 ON UPDATE CASCADE,
--- CHECK (from_club_id != to_club_id),
 CHECK (transfer_type != 'Free' OR transfer_fee = 0)
 );
--- Can not show scheduling constraint for stadiums, referees and clubs.
-CREATE TABLE `matches` (
+
+CREATE TABLE matches (
 match_ID INT AUTO_INCREMENT PRIMARY KEY ,
 competition_ID INT NOT NULL,
 home_club_ID INT NOT NULL,
@@ -115,7 +136,6 @@ away_club_ID INT NOT NULL,
 stadium_ID INT NOT NULL,
 referee_ID INT NOT NULL,
 match_datetime DATETIME NOT NULL,
--- After matches
 attendance INT CHECK (attendance >= 0),
 home_goals INT CHECK (home_goals >= 0),
 away_goals INT CHECK (away_goals >= 0),
@@ -134,9 +154,8 @@ ON UPDATE CASCADE,
 FOREIGN KEY (referee_ID) REFERENCES referees(person_ID)
 ON DELETE RESTRICT
 ON UPDATE CASCADE
--- CHECK (home_club_ID != away_club_ID)
 );
--- Can not do: Suspension rules, max no players
+
 CREATE TABLE match_stats (
 player_ID INT NOT NULL,
 match_ID INT NOT NULL,
@@ -152,12 +171,11 @@ PRIMARY KEY (player_ID, match_ID),
 FOREIGN KEY (player_ID) REFERENCES players(person_ID)
 ON DELETE RESTRICT
 ON UPDATE CASCADE,
-FOREIGN KEY (match_ID) REFERENCES `matches`(match_ID)
+FOREIGN KEY (match_ID) REFERENCES matches(match_ID)
 ON DELETE RESTRICT
 ON UPDATE CASCADE
 );
--- Additional table for the information: "A clubs may participate in multiple
--- competitions in the same season."
+
 CREATE TABLE participates (
 club_ID INT NOT NULL,
 competition_ID INT NOT NULL,
