@@ -1,5 +1,3 @@
-from fileinput import filename
-
 import pandas as pd
 import mysql.connector
 import hashlib
@@ -90,6 +88,20 @@ def import_all(file_path):
                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
                            (row['player_id'], row['match_id'], row['is_starter'], row['minutes_played'], row['position_played'], row['goals'], row['assists'], row['yellow_cards'], row['red_cards'], row['rating']))
 
+        # 8. TRANSFER RECORDS
+        transfers_df = pd.read_excel(file_path, sheet_name='Transfer Records')
+        for _, row in transfers_df.iterrows():
+            cursor.execute("""INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) 
+                              VALUES (%s, %s, %s, %s, %s, %s, %s)""", 
+                           (row['transfer_id'], row['player_id'], row['from_club_id'], row['to_club_id'], row['transfer_date'], row['transfer_fee'], row['transfer_type']))
+        
+        #9. CONTRACTS
+        contracts_df = pd.read_excel(file_path, sheet_name='Contracts')
+        for _, row in contracts_df.iterrows():
+            cursor.execute("""INSERT INTO contracts (contract_id, player_id, club_id, start_date, end_date, weekly_wage, contract_type) 
+                              VALUES (%s, %s, %s, %s, %s, %s, %s)""", 
+                           (row['contract_id'], row['player_id'], row['club_id'], row['start_date'], row['end_date'], row['weekly_wage'], row['contract_type']))
+            
         conn.commit()
         print("Success: Data imported into transfer_db schema.")
     except Exception as e:

@@ -94,7 +94,7 @@ ON UPDATE CASCADE
 CREATE TABLE transfer_record (
 transfer_id INT AUTO_INCREMENT PRIMARY KEY,
 player_id INT NOT NULL,
-from_club_id INT NOT NULL,
+from_club_id INT,
 to_club_id INT NOT NULL,
 transfer_date DATE NOT NULL,
 transfer_fee DECIMAL(15, 2) NOT NULL CHECK (transfer_fee >= 0),
