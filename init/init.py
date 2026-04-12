@@ -22,21 +22,6 @@ def import_all(file_path):
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
 
-        f = open('database/reset.sql', 'r')
-        sql_file = f.read()
-        f.close()
-        #cursor.execute(sql_file)
-        cursor.close()
-        conn.close()
-
-        conn = mysql.connector.connect(**db_config)
-        cursor = conn.cursor()
-        
-        f = open('database/schema.sql', 'r')
-        sql_file = f.read()
-        f.close()
-        #cursor.execute(sql_file)
-
         cursor.execute("SET FOREIGN_KEY_CHECKS=0")
         
         # 1. STADIUMS (Table: stadium | Columns: stadium_ID, stadium_name, city, capacity)
