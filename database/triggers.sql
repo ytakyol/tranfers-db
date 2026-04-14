@@ -115,13 +115,17 @@ BEFORE INSERT ON match_stats
 FOR EACH ROW
 BEGIN
     IF (SELECT COUNT(*)
-    FROM match_stats ms
-    JOIN players p ON p.person_ID = ms.player_id
-    JOIN contracts c ON c.player_id = ms.player_id
-    JOIN matches m ON m.match_ID = ms.match_id
-    WHERE match_ID = NEW.match_ID AND is_starter = 1) > 11 THEN
+    FROM match_stats
+    WHERE match_ID = NEW.match_ID AND is_starter = 1 AND club_ID = NEW.club_ID) > 11 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Starter number exceeds 11 for a match';
+        SET MESSAGE_TEXT = 'Starter count exceeds 11 for a match';
     END IF;
+    IF (SELECT COUNT(*)
+    FROM match_stats
+    WHERE match_ID = NEW.match_ID AND club_ID = NEW.club_ID) > 23 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Player count exceeds 23 for a match';
+    END IF;
+END$$
 
 DELIMITER ;

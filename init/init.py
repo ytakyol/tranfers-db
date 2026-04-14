@@ -84,9 +84,9 @@ def import_all(file_path):
         # 7. MATCH STATS
         stats_df = pd.read_excel(file_path, sheet_name='Match Stats')
         for _, row in stats_df.iterrows():
-            cursor.execute("""INSERT INTO match_stats (player_ID, match_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) 
-                              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
-                           (row['player_id'], row['match_id'], row['is_starter'], row['minutes_played'], row['position_played'], row['goals'], row['assists'], row['yellow_cards'], row['red_cards'], row['rating']))
+            cursor.execute("""INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) 
+                              VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", 
+                           (row['player_id'], row['match_id'], row['club_id'], row['is_starter'], row['minutes_played'], row['position_played'], row['goals'], row['assists'], row['yellow_cards'], row['red_cards'], row['rating']))
 
         # 8. TRANSFER RECORDS
         transfers_df = pd.read_excel(file_path, sheet_name='Transfer Records')

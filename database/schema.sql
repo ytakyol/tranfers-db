@@ -142,6 +142,7 @@ ON UPDATE CASCADE
 CREATE TABLE match_stats (
 player_ID INT NOT NULL,
 match_ID INT NOT NULL,
+club_ID INT NOT NULL,
 is_starter BOOLEAN NOT NULL,
 minutes_played INT NOT NULL CHECK (minutes_played BETWEEN 0 AND 120),
 position_in_match VARCHAR(5) NOT NULL,
