@@ -114,17 +114,50 @@ CREATE TRIGGER before_insert_match_stats
 BEFORE INSERT ON match_stats
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*)
+    IF NEW.is_starter <> 0 AND (SELECT COUNT(*)
     FROM match_stats
-    WHERE match_ID = NEW.match_ID AND is_starter = 1 AND club_ID = NEW.club_ID) > 11 THEN
+    WHERE match_ID = NEW.match_ID AND is_starter = 1 AND club_ID = NEW.club_ID) >= 11 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Starter count exceeds 11 for a match';
     END IF;
     IF (SELECT COUNT(*)
     FROM match_stats
-    WHERE match_ID = NEW.match_ID AND club_ID = NEW.club_ID) > 23 THEN
+    WHERE match_ID = NEW.match_ID AND club_ID = NEW.club_ID) >= 23 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Player count exceeds 23 for a match';
+    END IF;
+    IF EXISTS(SELECT 1
+    FROM matches m
+    JOIN match_stats ms ON m.match_ID = ms.match_ID
+    JOIN competitions c ON m.competition_ID = c.competition_ID
+    WHERE (ms.red_cards > 0 ) AND ms.player_ID = NEW.player_ID AND ms.club_ID = NEW.club_ID
+    AND c.competition_ID = (SELECT competition_ID FROM matches WHERE match_ID = NEW.match_ID)
+    AND m.match_datetime = (SELECT MAX(match_datetime) 
+     FROM matches a 
+     WHERE a.match_datetime < (SELECT match_datetime FROM matches WHERE match_ID = NEW.match_ID)
+     AND a.competition_ID = (SELECT competition_ID FROM matches WHERE match_ID = NEW.match_ID)
+     AND (NEW.club_ID = a.home_club_ID OR NEW.club_ID = a.away_club_ID))) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Player is suspended for this match due to red card';
+    END IF;
+    IF EXISTS(SELECT 1
+    FROM matches m
+    JOIN match_stats ms ON m.match_ID = ms.match_ID
+    JOIN competitions c ON m.competition_ID = c.competition_ID
+    WHERE (ms.yellow_cards >= 1) AND ms.player_ID = NEW.player_ID AND ms.club_ID = NEW.club_ID
+    AND c.competition_ID = (SELECT competition_ID FROM matches WHERE match_ID = NEW.match_ID)
+    AND m.match_datetime = (SELECT MAX(match_datetime)
+      FROM matches a 
+      WHERE a.match_datetime < (SELECT match_datetime FROM matches WHERE match_ID = NEW.match_ID)
+      AND a.competition_ID = (SELECT competition_ID FROM matches WHERE match_ID = NEW.match_ID)
+      AND (NEW.club_ID = a.home_club_ID OR NEW.club_ID = a.away_club_ID))
+    AND (SELECT SUM(yellow_cards) FROM match_stats ms2
+     JOIN matches m2 ON ms2.match_ID = m2.match_ID
+     WHERE ms2.player_ID = NEW.player_ID AND ms2.club_ID = NEW.club_ID
+     AND m2.competition_ID = (SELECT competition_ID FROM matches WHERE match_ID = NEW.match_ID)
+     AND m2.match_datetime < (SELECT match_datetime FROM matches WHERE match_ID = NEW.match_ID)) >= 5) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Player is suspended for this match due to yellow card accumulation';
     END IF;
 END$$
 
