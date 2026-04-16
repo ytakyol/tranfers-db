@@ -208,7 +208,7 @@ def manager_dashboard():
         FROM persons p JOIN managers m ON p.person_ID = m.person_ID 
         LEFT JOIN clubs c ON c.manager_ID = m.person_ID
         WHERE p.person_ID = %s
-    """, (user_id,), fetch=True) [cite: 63]
+    """, (user_id,), fetch=True)
     
     return render_template('manager.html', profile=profile[0] if profile else {})
 
@@ -311,10 +311,10 @@ def player_stats():
     
     if filter_type == 'season' and season:
         query += " AND c.season = %s"
-        params.append(season) [cite: 120]
+        params.append(season)
     elif filter_type == 'competition' and season and comp_id:
         query += " AND c.season = %s AND c.competition_ID = %s"
-        params.extend([season, comp_id]) [cite: 121]
+        params.extend([season, comp_id])
         
     stats = execute_query(query, tuple(params), fetch=True)
     return render_template('player.html', stats=stats[0] if stats else None)
