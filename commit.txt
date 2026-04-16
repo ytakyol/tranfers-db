@@ -1,1 +1,1 @@
-"manager and referee view is added."
+"execute schema is added."
