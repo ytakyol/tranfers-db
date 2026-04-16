@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <title>Manager Dashboard</title>
-    <style>body { font-family: Arial, sans-serif; margin: 20px; } .flash { color: red; }</style>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; } 
+        .flash { color: red; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        section { margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;}
+        .form-group { margin-bottom: 15px; }
+    </style>
 </head>
 <body>
     <h1>Manager Dashboard</h1>
@@ -26,23 +33,215 @@
         <p><strong>Experience Level:</strong> {{ profile.experience_level }}</p>
     </section>
 
-    <hr>
+    {% if profile.club_name %}
+    <section>
+        <h2>Filters (Fixtures, Standings, Historical Stats)</h2>
+        <form method="GET" action="">
+            <label>Season:</label>
+            <select name="season">
+                <option value="">All Seasons</option>
+                {% for s in seasons %}
+                <option value="{{ s }}" {% if request_args.season == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+            
+            <label>Competition:</label>
+            <select name="competition_id">
+                <option value="">All Competitions</option>
+                {% for c in all_comps %}
+                <option value="{{ c.competition_ID }}" {% if request_args.competition_id|string == c.competition_ID|string %}selected{% endif %}>{{ c.name }} ({{ c.season }})</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Apply View Filters</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Fixtures and Results</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Opponent</th>
+                <th>Competition</th>
+                <th>Stadium</th>
+                <th>Score</th>
+                <th>Result</th>
+            </tr>
+            {% for f in fixtures %}
+            <tr>
+                <td>{{ f.match_datetime }}</td>
+                <td>{{ f.opposing_club }}</td>
+                <td>{{ f.competition_name }} ({{ f.season }})</td>
+                <td>{{ f.stadium_name }}</td>
+                <td>{{ f.final_score }}</td>
+                <td>{{ f.result }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6">No matches found.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <section>
+        <h2>League Standings</h2>
+        <table>
+            <tr>
+                <th>Rank</th>
+                <th>Club</th>
+                <th>Played</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Points</th>
+            </tr>
+            {% for s in standings %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ s.club_name }}</td>
+                <td>{{ s.matches_played }}</td>
+                <td>{{ s.wins }}</td>
+                <td>{{ s.draws }}</td>
+                <td>{{ s.losses }}</td>
+                <td>{{ s.goals_scored }}</td>
+                <td>{{ s.goals_conceded }}</td>
+                <td>{{ s.goal_difference }}</td>
+                <td><strong>{{ s.total_points }}</strong></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="10">Select a specific league competition and season to view standings.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <section>
+        <h2>Squad Statistics</h2>
+        <form method="GET" action="" class="form-group">
+            <input type="hidden" name="season" value="{{ request_args.season }}">
+            <input type="hidden" name="competition_id" value="{{ request_args.competition_id }}">
+            <label>View Type:</label>
+            <select name="stat_filter_type">
+                <option value="current" {% if request_args.stat_filter_type == 'current' %}selected{% endif %}>Current Roster (All-Time Club Stats)</option>
+                <option value="historical" {% if request_args.stat_filter_type == 'historical' %}selected{% endif %}>Historical (Matches played in current filters)</option>
+            </select>
+            <button type="submit">Switch View</button>
+        </form>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Nat.</th>
+                <th>Pos.</th>
+                <th>Value (€)</th>
+                <th>Matches</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Y/R Cards</th>
+                <th>Avg Rating</th>
+            </tr>
+            {% for s in squad_stats %}
+            <tr>
+                <td>{{ s.name }} {{ s.surname }}</td>
+                <td>{{ s.age }}</td>
+                <td>{{ s.nationality }}</td>
+                <td>{{ s.main_position }} ({{ s.strong_foot }}, {{ s.height }}cm)</td>
+                <td>{{ s.market_value }}</td>
+                <td>{{ s.matches_played }}</td>
+                <td>{{ s.goals }}</td>
+                <td>{{ s.assists }}</td>
+                <td>{{ s.yellow_cards }} / {{ s.red_cards }}</td>
+                <td>{{ "%.2f"|format(s.avg_rating) if s.avg_rating else 'N/A' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="10">No squad data available for the selected filters.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
 
     <section>
         <h2>Submit Match Squad</h2>
         <form action="submit-squad" method="POST">
             <input type="hidden" name="club_id" value="{{ profile.club_ID }}">
-            <label>Match ID:</label>
-            <input type="number" name="match_id" required><br><br>
-            
-            <p>Select Players (Comma separated IDs for simplicity):</p>
-            <input type="text" name="player_id" placeholder="e.g., 1, 5, 12"> 
-            
-            <p>Starter IDs (Comma separated IDs from above):</p>
-            <input type="text" name="is_starter" placeholder="e.g., 1, 12"><br><br>
-            
-            <button type="submit">Submit Squad</button>
+            <div class="form-group">
+                <label>Match ID:</label>
+                <input type="number" name="match_id" required>
+            </div>
+            <p>Select Starters (Max 11) and Substitutes from your active eligible roster:</p>
+            <table>
+                <tr>
+                    <th>Player</th>
+                    <th>Position</th>
+                    <th>Starter</th>
+                    <th>Substitute</th>
+                </tr>
+                {% for p in active_roster %}
+                <tr>
+                    <td>{{ p.name }} {{ p.surname }}</td>
+                    <td>{{ p.main_position }}</td>
+                    <td><input type="checkbox" name="starters" value="{{ p.person_ID }}"></td>
+                    <td><input type="checkbox" name="subs" value="{{ p.person_ID }}"></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button type="submit">Submit Match Squad</button>
         </form>
     </section>
+
+    <section>
+        <h2>Competition Leaderboards (Scouting)</h2>
+        <form method="GET" action="" class="form-group">
+            <label>Select Competition & Season to load Leaderboards:</label>
+            <select name="lb_comp" required>
+                {% for c in all_comps %}
+                <option value="{{ c.competition_ID }}" {% if request_args.lb_comp|string == c.competition_ID|string %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="lb_season" required>
+                {% for s in seasons %}
+                <option value="{{ s }}" {% if request_args.lb_season == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Load Leaderboards</button>
+        </form>
+
+        {% if top_scorers %}
+        <div style="display: flex; gap: 20px;">
+            <div style="flex: 1;">
+                <h3>Top Goal Scorers</h3>
+                <table>
+                    <tr><th>Name</th><th>Club</th><th>Goals</th></tr>
+                    {% for p in top_scorers %}
+                    <tr><td>{{ p.name }} {{ p.surname }}</td><td>{{ p.club_name }}</td><td>{{ p.metric }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <h3>Top Assists</h3>
+                <table>
+                    <tr><th>Name</th><th>Club</th><th>Assists</th></tr>
+                    {% for p in top_assists %}
+                    <tr><td>{{ p.name }} {{ p.surname }}</td><td>{{ p.club_name }}</td><td>{{ p.metric }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <h3>Highest Avg Rating (Min 3 Matches)</h3>
+                <table>
+                    <tr><th>Name</th><th>Club</th><th>Rating</th></tr>
+                    {% for p in top_ratings %}
+                    <tr><td>{{ p.name }} {{ p.surname }}</td><td>{{ p.club_name }}</td><td>{{ "%.2f"|format(p.metric) }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+    {% else %}
+    <p>You are not currently assigned to any club. Waiting for Database Manager assignment.</p>
+    {% endif %}
 </body>
 </html>

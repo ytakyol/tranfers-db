@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
     <title>Referee Dashboard</title>
-    <style>body { font-family: Arial, sans-serif; margin: 20px; } .flash { color: red; }</style>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; } 
+        .flash { color: red; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        section { margin-bottom: 40px; }
+    </style>
 </head>
 <body>
     <h1>Referee Portal</h1>
@@ -19,7 +25,17 @@
     {% endwith %}
 
     <section>
-        <h2>Match History & Stats</h2>
+        <h2>My Profile</h2>
+        <p><strong>Name:</strong> {{ profile.name }} {{ profile.surname }}</p>
+        <p><strong>Nationality:</strong> {{ profile.nationality }}</p>
+        <p><strong>License Level:</strong> {{ profile.license_level }}</p>
+        <p><strong>Years of Experience:</strong> {{ profile.years_of_experience }}</p>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Career Statistics Overview</h2>
         <p><strong>Matches Officiated:</strong> {{ stats.matches_officiated }}</p>
         <p><strong>Total Red Cards Issued:</strong> {{ stats.total_reds }}</p>
         <p><strong>Total Yellow Cards Issued:</strong> {{ stats.total_yellows }}</p>
@@ -28,19 +44,88 @@
     <hr>
 
     <section>
-        <h2>Submit Match Report</h2>
+        <h2>Detailed Match History</h2>
+        <table>
+            <tr>
+                <th>Date & Time</th>
+                <th>Competition</th>
+                <th>Stadium</th>
+                <th>Match</th>
+                <th>Attendance</th>
+                <th>Result / Status</th>
+                <th>Yellow Cards</th>
+                <th>Red Cards</th>
+            </tr>
+            {% for m in match_history %}
+            <tr>
+                <td>{{ m.match_datetime }}</td>
+                <td>{{ m.competition_name }}</td>
+                <td>{{ m.stadium_name }}</td>
+                <td>{{ m.match_teams }}</td>
+                <td>{{ m.attendance if m.attendance else 'N/A' }}</td>
+                <td>{{ m.result_or_status }}</td>
+                <td>{{ m.total_yellow_cards }}</td>
+                <td>{{ m.total_red_cards }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="8">No matches found.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Submit Match Outcome</h2>
         <form action="submit-result" method="POST">
             <label>Match ID:</label>
             <input type="number" name="match_id" required><br><br>
             <label>Attendance:</label>
             <input type="number" name="attendance" required><br><br>
-            <label>Score (Home - Away):</label>
+            <label>Final Score (Home - Away):</label>
             <input type="number" name="home_goals" required style="width: 50px;"> - 
             <input type="number" name="away_goals" required style="width: 50px;"><br><br>
             
-            <button type="submit">Submit Final Report</button>
+            <button type="submit">Submit Final Match Report</button>
         </form>
         <small>Note: Results can only be submitted after the match time has passed.</small>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Submit Player Performance Statistics</h2>
+        <form action="submit-player-stats" method="POST">
+            <label>Match ID:</label>
+            <input type="number" name="match_id" required><br><br>
+            
+            <label>Player ID:</label>
+            <input type="number" name="player_id" required><br><br>
+
+            <label>Minutes Played:</label>
+            <input type="number" name="minutes_played" min="0" max="120" required><br><br>
+
+            <label>Position Played in Match:</label>
+            <input type="text" name="position" required placeholder="e.g., ST, CM, CB"><br><br>
+
+            <label>Goals:</label>
+            <input type="number" name="goals" min="0" required><br><br>
+
+            <label>Assists:</label>
+            <input type="number" name="assists" min="0" required><br><br>
+
+            <label>Yellow Cards:</label>
+            <input type="number" name="yellow_cards" min="0" max="2" required><br><br>
+
+            <label>Red Cards (0 or 1):</label>
+            <input type="number" name="red_cards" min="0" max="1" required><br><br>
+
+            <label>Rating (1.0 to 10.0):</label>
+            <input type="number" name="rating" step="0.1" min="1.0" max="10.0" required><br><br>
+
+            <button type="submit">Update Player Statistics</button>
+        </form>
+        <small>Note: Only stats for players submitted in the squad by the Manager can be updated.</small>
     </section>
 </body>
 </html>

@@ -1,1 +1,1 @@
-"db manager view is added."
+"manager and referee view is added."
