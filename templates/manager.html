@@ -2,31 +2,28 @@
 <html lang="en">
 <head>
     <title>Manager Dashboard</title>
+    <style>body { font-family: Arial, sans-serif; margin: 20px; } .flash { color: red; }</style>
 </head>
 <body>
     <h1>Manager Dashboard</h1>
+    <a href="/logout">Logout</a>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     
     <section>
         <h2>My Profile</h2>
-        <p>Current Club: [From SQL]</p>
-        <p>Preferred Formation: [From SQL]</p>
-        <p>Experience Level: [From SQL]</p>
-    </section>
-
-    <hr>
-
-    <section>
-        <h2>Club Fixtures and Results</h2>
-        <form action="/manager/fixtures" method="GET">
-            <input type="text" name="competition" placeholder="Competition">
-            <input type="text" name="season" placeholder="Season (e.g., 2025/2026)">
-            <button type="submit">Filter</button>
-        </form>
-        <table border="1">
-            <tr>
-                <th>Date</th><th>Opponent</th><th>Stadium</th><th>Score</th><th>Result</th>
-            </tr>
-            </table>
+        <p><strong>Name:</strong> {{ profile.name }} {{ profile.surname }}</p>
+        <p><strong>Current Club:</strong> {{ profile.club_name if profile.club_name else 'Unassigned' }}</p>
+        <p><strong>Preferred Formation:</strong> {{ profile.preferred_formation }}</p>
+        <p><strong>Experience Level:</strong> {{ profile.experience_level }}</p>
     </section>
 
     <hr>
@@ -34,23 +31,18 @@
     <section>
         <h2>Submit Match Squad</h2>
         <form action="/submit-squad" method="POST">
-            <label>Match ID:</label><input type="text" name="match_id" required><br>
-            <p>Select Players (11-23 total, max 11 starters):</p>
-            <input type="checkbox" name="player_id" value="1"> Player Name 
-            <label>Starter?</label> <input type="checkbox" name="is_starter" value="1"><br>
+            <input type="hidden" name="club_id" value="{{ profile.club_ID }}">
+            <label>Match ID:</label>
+            <input type="number" name="match_id" required><br><br>
+            
+            <p>Select Players (Comma separated IDs for simplicity):</p>
+            <input type="text" name="player_id" placeholder="e.g., 1, 5, 12"> 
+            
+            <p>Starter IDs (Comma separated IDs from above):</p>
+            <input type="text" name="is_starter" placeholder="e.g., 1, 12"><br><br>
+            
             <button type="submit">Submit Squad</button>
         </form>
-    </section>
-
-    <hr>
-
-    <section>
-        <h2>League Standings</h2>
-        <table border="1">
-            <tr>
-                <th>Club</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GS</th><th>GC</th><th>GD</th><th>Points</th>
-            </tr>
-            </table>
     </section>
 </body>
 </html>
