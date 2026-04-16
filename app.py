@@ -2,9 +2,20 @@ from flask import Flask, render_template, request, redirect, session, flash
 import hashlib
 from datetime import date
 from database_utils import execute_query
+from routes.player import player_bp
+from routes.referee import referee_bp
+from routes.manager import manager_bp
+from routes.db_manager import dbmanager_bp
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
+
+# Registering roles with a prefix
+app.register_blueprint(player_bp, url_prefix='/player')
+app.register_blueprint(referee_bp, url_prefix='/referee')
+app.register_blueprint(manager_bp, url_prefix='/manager')
+app.register_blueprint(dbmanager_bp, url_prefix='/db_manager')
+
 
 # Password Hashing (SHA-256) as required [cite: 166]
 def hash_password(password):
@@ -140,208 +151,6 @@ def login():
 def logout():
     session.clear()
     return redirect('/')
-
-# ==========================================
-# DATABASE MANAGER ROUTES
-# ==========================================
-
-@app.route('/db_manager')
-def db_manager_dashboard():
-    if session.get('user', {}).get('role') != 'db_manager': return redirect('/')
-    stadiums = execute_query("""
-        SELECT s.stadium_name, s.city, s.capacity, GROUP_CONCAT(c.club_name) as home_clubs 
-        FROM stadiums s LEFT JOIN clubs c ON s.stadium_name = c.stadium_name AND s.city = c.city
-        GROUP BY s.stadium_ID
-    """, fetch=True) # View stadiums requirement [cite: 65]
-    return render_template('db_manager.html', stadiums=stadiums)
-
-@app.route('/schedule-match', methods=['POST'])
-def schedule_match():
-    if session.get('user', {}).get('role') != 'db_manager': return "Unauthorized", 403
-    
-    data = (
-        request.form['competition_id'],
-        request.form['home_club'],
-        request.form['away_club'],
-        request.form['stadium_id'],
-        request.form['referee_id'],
-        request.form['match_date'] + " " + request.form.get('match_time', '00:00:00')
-    )
-    
-    query = """
-        INSERT INTO matches (competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """
-    try:
-        execute_query(query, data) # Triggers handle 120-min and capacity logic [cite: 68, 69, 135]
-        flash("Match scheduled successfully.")
-    except Exception as e:
-        flash(f"Database Error: {str(e)}")
-    
-    return redirect('/db_manager')
-
-@app.route('/transfer', methods=['POST'])
-def register_transfer():
-    if session.get('user', {}).get('role') != 'db_manager': return "Unauthorized", 403
-    
-    player_id = request.form['player_id']
-    to_club_id = request.form['club_id']
-    fee = request.form['fee']
-    transfer_type = request.form.get('transfer_type', 'Purchase')
-    
-    try:
-        # Retrieve current club for transfer record
-        current_contract = execute_query("SELECT club_id FROM contracts WHERE player_id = %s AND end_date > CURDATE() AND contract_type = 'Permanent'", (player_id,), fetch=True)
-        from_club_id = current_contract[0]['club_id'] if current_contract else None
-        
-        # 1. Insert Transfer Record [cite: 93, 94]
-        execute_query("""
-            INSERT INTO transfer_record (player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type)
-            VALUES (%s, %s, %s, CURDATE(), %s, %s)
-        """, (player_id, from_club_id, to_club_id, fee, transfer_type))
-        
-        # 2. Update Market Value if Purchase [cite: 95]
-        if transfer_type == 'Purchase':
-            execute_query("UPDATE players SET market_value = %s WHERE person_ID = %s", (fee, player_id))
-            # Terminate old permanent contract [cite: 97]
-            execute_query("UPDATE contracts SET end_date = CURDATE() WHERE player_id = %s AND contract_type = 'Permanent' AND end_date > CURDATE()", (player_id,))
-            
-        # 3. Create new Contract [cite: 92]
-        execute_query("""
-            INSERT INTO contracts (player_id, club_id, start_date, end_date, weekly_wage, contract_type)
-            VALUES (%s, %s, CURDATE(), %s, %s, %s)
-        """, (player_id, to_club_id, request.form['end_date'], request.form['wage'], transfer_type))
-
-        flash("Transfer registered successfully.")
-    except Exception as e:
-        flash(f"Database Error: {str(e)}")
-        
-    return redirect('/db_manager')
-
-# ==========================================
-# MANAGER ROUTES
-# ==========================================
-
-@app.route('/manager')
-def manager_dashboard():
-    if session.get('user', {}).get('role') != 'manager': return redirect('/')
-    user_id = session['user']['id']
-    
-    profile = execute_query("""
-        SELECT p.name, p.surname, p.nationality, p.date_of_birth, m.preferred_formation, m.experience_level, c.club_name, c.club_ID
-        FROM persons p JOIN managers m ON p.person_ID = m.person_ID 
-        LEFT JOIN clubs c ON c.manager_ID = m.person_ID
-        WHERE p.person_ID = %s
-    """, (user_id,), fetch=True)
-    
-    return render_template('manager.html', profile=profile[0] if profile else {})
-
-@app.route('/submit-squad', methods=['POST'])
-def submit_squad():
-    if session.get('user', {}).get('role') != 'manager': return "Unauthorized", 403
-    
-    match_id = request.form['match_id']
-    player_ids = request.form.getlist('player_id')
-    starters = request.form.getlist('is_starter')
-    club_id = request.form['club_id']
-    
-    try:
-        # Loop and insert to match_stats. Triggers enforce 11 starter max & 23 player max [cite: 76, 137]
-        for pid in player_ids:
-            is_starter = 1 if pid in starters else 0
-            execute_query("""
-                INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards)
-                VALUES (%s, %s, %s, %s, 0, 'SUB', 0, 0, 0, 0)
-            """, (pid, match_id, club_id, is_starter))
-        flash("Squad submitted.")
-    except Exception as e:
-        flash(f"Error submitting squad: {e}")
-        
-    return redirect('/manager')
-
-# ==========================================
-# REFEREE ROUTES
-# ==========================================
-
-@app.route('/referee')
-def referee_dashboard():
-    if session.get('user', {}).get('role') != 'referee': return redirect('/')
-    user_id = session['user']['id']
-    
-    # Career stats overview [cite: 112]
-    stats = execute_query("""
-        SELECT COUNT(DISTINCT m.match_ID) as matches_officiated, 
-               SUM(ms.red_cards) as total_reds, SUM(ms.yellow_cards) as total_yellows
-        FROM matches m LEFT JOIN match_stats ms ON m.match_ID = ms.match_ID
-        WHERE m.referee_ID = %s
-    """, (user_id,), fetch=True)[0]
-    
-    return render_template('referee.html', stats=stats)
-
-@app.route('/submit-result', methods=['POST'])
-def submit_result():
-    if session.get('user', {}).get('role') != 'referee': return "Unauthorized", 403
-    
-    match_id = request.form['match_id']
-    attendance = request.form['attendance']
-    home_goals = request.form['home_goals']
-    away_goals = request.form['away_goals']
-    
-    try:
-        # Only process if time has passed (Application-side check possible, but DB handles capacity trigger) [cite: 110]
-        execute_query("""
-            UPDATE matches SET attendance = %s, home_goals = %s, away_goals = %s 
-            WHERE match_ID = %s AND match_datetime < NOW() AND referee_ID = %s
-        """, (attendance, home_goals, away_goals, match_id, session['user']['id']))
-        flash("Results updated.")
-    except Exception as e:
-        flash(f"Database Error: {e}")
-        
-    return redirect('/referee')
-
-# ==========================================
-# PLAYER ROUTES
-# ==========================================
-
-@app.route('/player')
-def player_dashboard():
-    if session.get('user', {}).get('role') != 'player': return redirect('/')
-    user_id = session['user']['id']
-    
-    # Player Profile [cite: 62]
-    profile = execute_query("""
-        SELECT p.name, p.surname, p.nationality, pl.market_value, pl.main_position, pl.strong_foot, pl.height
-        FROM persons p JOIN players pl ON p.person_ID = pl.person_ID
-        WHERE p.person_ID = %s
-    """, (user_id,), fetch=True)
-    
-    return render_template('player.html', profile=profile[0] if profile else {})
-
-@app.route('/player/stats', methods=['GET'])
-def player_stats():
-    user_id = session['user']['id']
-    filter_type = request.args.get('filter_type', 'career')
-    season = request.args.get('season')
-    comp_id = request.args.get('competition_id')
-    
-    # Base query for aggregation [cite: 118]
-    query = """
-        SELECT COUNT(ms.match_ID) as games, SUM(ms.goals) as total_goals, SUM(ms.assists) as total_assists,
-               SUM(ms.yellow_cards) as yellow, SUM(ms.red_cards) as red, AVG(ms.rating) as avg_rating
-        FROM match_stats ms JOIN matches m ON ms.match_ID = m.match_ID JOIN competitions c ON m.competition_ID = c.competition_ID
-        WHERE ms.player_ID = %s
-    """
-    params = [user_id]
-    
-    if filter_type == 'season' and season:
-        query += " AND c.season = %s"
-        params.append(season)
-    elif filter_type == 'competition' and season and comp_id:
-        query += " AND c.season = %s AND c.competition_ID = %s"
-        params.extend([season, comp_id])
-        
-    stats = execute_query(query, tuple(params), fetch=True)
-    return render_template('player.html', stats=stats[0] if stats else None)
 
 if __name__ == '__main__':
     app.run(debug=True)

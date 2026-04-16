@@ -44,7 +44,7 @@
     </table>
 
     <h2 id="schedule">Schedule a New Match</h2>
-    <form action="/schedule-match" method="POST">
+    <form action="db_manager/schedule-match" method="POST">
         <label>Competition ID:</label>
         <input type="number" name="competition_id" required><br><br>
         <label>Date (YYYY-MM-DD):</label>
@@ -63,7 +63,7 @@
     </form>
 
     <h2 id="transfers">Register Player Transfer</h2>
-    <form action="/transfer" method="POST">
+    <form action="db_manager/transfer" method="POST">
         <label>Player ID:</label>
         <input type="number" name="player_id" required><br><br>
         <label>Destination Club ID:</label>
