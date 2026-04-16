@@ -37,9 +37,7 @@
     <section>
     <h2>Register New User</h2>
     <form action="/signup" method="POST">
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br><br>
-        
+
         <label>Role:</label><br>
         <select name="role" id="role-select" onchange="toggleFields()">
             <option value="db_manager">Database Manager</option>
@@ -47,6 +45,9 @@
             <option value="manager">Manager</option>
             <option value="referee">Referee</option>
         </select><br><br>
+
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br><br>
 
         <div id="person-fields" style="display: none;">
             <label>Name:</label><br>
