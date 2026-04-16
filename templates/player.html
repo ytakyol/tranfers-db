@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Manager Dashboard</title>
-    <style>body { font-family: Arial, sans-serif; margin: 20px; } .flash { color: red; }</style>
+    <title>Player Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .flash { color: red; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        section { margin-bottom: 40px; }
+    </style>
 </head>
 <body>
-    <h1>Manager Dashboard</h1>
+    <h1>Player Dashboard</h1>
     <a href="/logout">Logout</a>
     
     {% with messages = get_flashed_messages() %}
@@ -21,28 +27,164 @@
     <section>
         <h2>My Profile</h2>
         <p><strong>Name:</strong> {{ profile.name }} {{ profile.surname }}</p>
-        <p><strong>Current Club:</strong> {{ profile.club_name if profile.club_name else 'Unassigned' }}</p>
-        <p><strong>Preferred Formation:</strong> {{ profile.preferred_formation }}</p>
-        <p><strong>Experience Level:</strong> {{ profile.experience_level }}</p>
+        <p><strong>Age:</strong> {{ profile.age }}</p>
+        <p><strong>Nationality:</strong> {{ profile.nationality }}</p>
+        <p><strong>Current Club:</strong> {{ profile.current_club if profile.current_club else 'Free Agent' }}</p>
+        <p><strong>Height:</strong> {{ profile.height }} cm</p>
+        <p><strong>Main Position:</strong> {{ profile.main_position }}</p>
+        <p><strong>Strong Foot:</strong> {{ profile.strong_foot }}</p>
+        <p><strong>Market Value:</strong> €{{ profile.market_value }}</p>
     </section>
 
     <hr>
 
     <section>
-        <h2>Submit Match Squad</h2>
-        <form action="submit-squad" method="POST">
-            <input type="hidden" name="club_id" value="{{ profile.club_ID }}">
-            <label>Match ID:</label>
-            <input type="number" name="match_id" required><br><br>
-            
-            <p>Select Players (Comma separated IDs for simplicity):</p>
-            <input type="text" name="player_id" placeholder="e.g., 1, 5, 12"> 
-            
-            <p>Starter IDs (Comma separated IDs from above):</p>
-            <input type="text" name="is_starter" placeholder="e.g., 1, 12"><br><br>
-            
-            <button type="submit">Submit Squad</button>
+        <h2>Performance Statistics</h2>
+        <form method="GET" action="">
+            <label>Filter By:</label>
+            <select name="filter_type" id="filter_type" onchange="toggleFilters()">
+                <option value="career" {% if filter_type == 'career' %}selected{% endif %}>Career Aggregation</option>
+                <option value="season" {% if filter_type == 'season' %}selected{% endif %}>Seasonal Filtering</option>
+                <option value="competition" {% if filter_type == 'competition' %}selected{% endif %}>Competition & Season Filtering</option>
+            </select>
+
+            <span id="season-filter" style="display:none; margin-left: 10px;">
+                <label>Season:</label>
+                <select name="season">
+                    {% for s in seasons %}
+                    <option value="{{ s }}" {% if selected_season == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </span>
+
+            <span id="comp-filter" style="display:none; margin-left: 10px;">
+                <label>Competition:</label>
+                <select name="competition_id">
+                    {% for c in all_comps %}
+                    <option value="{{ c.competition_ID }}" {% if selected_comp|string == c.competition_ID|string %}selected{% endif %}>{{ c.name }} ({{ c.season }})</option>
+                    {% endfor %}
+                </select>
+            </span>
+
+            <button type="submit" style="margin-left: 10px;">Apply Filter</button>
         </form>
+
+        <table style="margin-top: 15px;">
+            <tr>
+                <th>Games Played</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Yellow Cards</th>
+                <th>Red Cards</th>
+                <th>Average Rating</th>
+            </tr>
+            <tr>
+                <td>{{ stats.games_played }}</td>
+                <td>{{ stats.total_goals }}</td>
+                <td>{{ stats.total_assists }}</td>
+                <td>{{ stats.total_yellow_cards }}</td>
+                <td>{{ stats.total_red_cards }}</td>
+                <td>{{ "%.2f"|format(stats.average_rating) if stats.average_rating else 'N/A' }}</td>
+            </tr>
+        </table>
     </section>
+
+    <hr>
+
+    <section>
+        <h2>Match History</h2>
+        <table>
+            <tr>
+                <th>Date & Time</th>
+                <th>Competition</th>
+                <th>Stadium</th>
+                <th>Opposing Club</th>
+                <th>Result</th>
+                <th>Mins Played</th>
+                <th>Position</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Yel / Red</th>
+                <th>Rating</th>
+            </tr>
+            {% for m in match_history %}
+            <tr>
+                <td>{{ m.match_datetime }}</td>
+                <td>{{ m.competition_name }}</td>
+                <td>{{ m.stadium_name }}</td>
+                <td>{{ m.opposing_club }}</td>
+                <td>{{ m.final_result }}</td>
+                <td>{{ m.minutes_played }}</td>
+                <td>{{ m.position_in_match }}</td>
+                <td>{{ m.goals }}</td>
+                <td>{{ m.assists }}</td>
+                <td>{{ m.yellow_cards }} / {{ m.red_cards }}</td>
+                <td>{{ m.rating }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="11">No matches found.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Career History</h2>
+        
+        <h3>Contracts</h3>
+        <table>
+            <tr>
+                <th>Club</th>
+                <th>Weekly Salary</th>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            {% for c in contracts %}
+            <tr>
+                <td>{{ c.club_name }}</td>
+                <td>€{{ c.salary }}</td>
+                <td>{{ c.contract_type }}</td>
+                <td>{{ c.start_date }}</td>
+                <td>{{ c.end_date }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No contracts found.</td></tr>
+            {% endfor %}
+        </table>
+
+        <h3>Transfers</h3>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Fee</th>
+                <th>From Club</th>
+                <th>To Club</th>
+                <th>Type</th>
+            </tr>
+            {% for t in transfers %}
+            <tr>
+                <td>{{ t.transfer_date }}</td>
+                <td>€{{ t.transfer_fee }}</td>
+                <td>{{ t.source_club if t.source_club else 'None (Free Agent)' }}</td>
+                <td>{{ t.destination_club }}</td>
+                <td>{{ t.transfer_type }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No transfers found.</td></tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <script>
+        // Adjust the filtering selections natively on dropdown changes
+        function toggleFilters() {
+            var val = document.getElementById('filter_type').value;
+            document.getElementById('season-filter').style.display = (val === 'season' || val === 'competition') ? 'inline-block' : 'none';
+            document.getElementById('comp-filter').style.display = (val === 'competition') ? 'inline-block' : 'none';
+        }
+        window.onload = toggleFilters;
+    </script>
 </body>
 </html>
