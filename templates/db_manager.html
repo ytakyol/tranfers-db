@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <title>DB Manager Dashboard</title>
-    <style>body { font-family: Arial, sans-serif; margin: 20px; } table { border-collapse: collapse; width: 100%; margin-bottom: 20px;} th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } .flash { color: red; }</style>
+    <style>body { font-family: Arial, sans-serif; margin: 20px; } table { border-collapse: collapse; width: 100%; margin-bottom: 20px;} th, td { border: 1px solid #ccc; padding: 8px; text-align: left; } .flash { color: red; font-weight: bold; } section { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px; }</style>
 </head>
 <body>
     <h1>Database Manager Dashboard</h1>
-    <a href="/logout">Logout</a>
+    <a href="/logout">Logout</a> | <a href="/" target="_blank">Register New Users (Public Signup)</a>
     <hr>
 
     {% with messages = get_flashed_messages() %}
@@ -19,68 +19,117 @@
       {% endif %}
     {% endwith %}
 
-    <h2 id="stadiums">Stadiums</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>City</th>
-                <th>Capacity</th>
-                <th>Home Club(s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for s in stadiums %}
-            <tr>
-                <td>{{ s.stadium_name }}</td>
-                <td>{{ s.city }}</td>
-                <td>{{ s.capacity }}</td>
-                <td>{{ s.home_clubs if s.home_clubs else 'None' }}</td>
-            </tr>
-            {% else %}
-            <tr><td colspan="4">No stadiums found.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <section id="stadiums">
+        <h2>Stadiums Overview</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Stadium ID</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Capacity</th>
+                    <th>Home Club(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in stadiums %}
+                <tr>
+                    <td>{{ s.stadium_ID }}</td>
+                    <td>{{ s.stadium_name }}</td>
+                    <td>{{ s.city }}</td>
+                    <td>{{ s.capacity }}</td>
+                    <td>{{ s.home_clubs if s.home_clubs else 'None' }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5">No stadiums found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
-    <h2 id="schedule">Schedule a New Match</h2>
-    <form action="schedule-match" method="POST">
-        <label>Competition ID:</label>
-        <input type="number" name="competition_id" required><br><br>
-        <label>Date (YYYY-MM-DD):</label>
-        <input type="date" name="match_date" required><br><br>
-        <label>Time (HH:MM:SS):</label>
-        <input type="time" name="match_time" step="1"><br><br>
-        <label>Stadium ID:</label>
-        <input type="number" name="stadium_id" required><br><br>
-        <label>Home Club ID:</label>
-        <input type="number" name="home_club" required><br><br>
-        <label>Away Club ID:</label>
-        <input type="number" name="away_club" required><br><br>
-        <label>Referee ID:</label>
-        <input type="number" name="referee_id" required><br><br>
-        <button type="submit">Schedule Match</button>
-    </form>
+    <section id="rename-stadium">
+        <h2>Rename a Stadium</h2>
+        <form action="rename-stadium" method="POST">
+            <label>Stadium ID:</label>
+            <input type="number" name="stadium_id" required><br><br>
+            <label>New Stadium Name:</label>
+            <input type="text" name="new_name" required><br><br>
+            <button type="submit">Rename Stadium</button>
+        </form>
+    </section>
 
-    <h2 id="transfers">Register Player Transfer</h2>
-    <form action="transfer" method="POST">
-        <label>Player ID:</label>
-        <input type="number" name="player_id" required><br><br>
-        <label>Destination Club ID:</label>
-        <input type="number" name="club_id" required><br><br>
-        <label>Transfer Type:</label>
-        <select name="transfer_type">
-            <option value="Purchase">Purchase</option>
-            <option value="Loan">Loan</option>
-            <option value="Free">Free</option>
-        </select><br><br>
-        <label>Transfer Fee:</label>
-        <input type="number" name="fee" required><br><br>
-        <label>Weekly Wage:</label>
-        <input type="number" name="wage" required><br><br>
-        <label>Contract End Date:</label>
-        <input type="date" name="end_date" required><br><br>
-        <button type="submit">Complete Transfer</button>
-    </form>
+    <section id="create-competition">
+        <h2>Create a New Competition</h2>
+        <form action="create-competition" method="POST">
+            <label>Competition Name:</label>
+            <input type="text" name="name" placeholder="e.g. Premier League" required><br><br>
+            <label>Season:</label>
+            <input type="text" name="season" placeholder="e.g. 2025/2026" required><br><br>
+            <label>Country:</label>
+            <input type="text" name="country" required><br><br>
+            <label>Competition Type:</label>
+            <select name="competition_type" required>
+                <option value="League">League</option>
+                <option value="Cup">Cup</option>
+                <option value="International">International</option>
+            </select><br><br>
+            <button type="submit">Create Competition</button>
+        </form>
+    </section>
+
+    <section id="assign-manager">
+        <h2>Assign Manager to Club</h2>
+        <form action="assign-manager" method="POST">
+            <label>Club ID:</label>
+            <input type="number" name="club_id" required><br><br>
+            <label>Manager ID (Leave blank to remove manager):</label>
+            <input type="number" name="manager_id"><br><br>
+            <button type="submit">Update Assignment</button>
+        </form>
+    </section>
+
+    <section id="schedule">
+        <h2>Schedule a New Match</h2>
+        <form action="schedule-match" method="POST">
+            <label>Competition ID:</label>
+            <input type="number" name="competition_id" required><br><br>
+            <label>Date (YYYY-MM-DD):</label>
+            <input type="date" name="match_date" required><br><br>
+            <label>Time (HH:MM:SS):</label>
+            <input type="time" name="match_time" step="1"><br><br>
+            <label>Stadium ID:</label>
+            <input type="number" name="stadium_id" required><br><br>
+            <label>Home Club ID:</label>
+            <input type="number" name="home_club" required><br><br>
+            <label>Away Club ID:</label>
+            <input type="number" name="away_club" required><br><br>
+            <label>Referee ID:</label>
+            <input type="number" name="referee_id" required><br><br>
+            <button type="submit">Schedule Match</button>
+        </form>
+    </section>
+
+    <section id="transfers">
+        <h2>Register Player Transfer & Contract</h2>
+        <form action="transfer" method="POST">
+            <label>Player ID:</label>
+            <input type="number" name="player_id" required><br><br>
+            <label>Destination Club ID:</label>
+            <input type="number" name="club_id" required><br><br>
+            <label>Transfer Type:</label>
+            <select name="transfer_type">
+                <option value="Purchase">Purchase</option>
+                <option value="Loan">Loan</option>
+                <option value="Free">Free</option>
+            </select><br><br>
+            <label>Transfer Fee (€):</label>
+            <input type="number" name="fee" required><br><br>
+            <label>Weekly Wage (€):</label>
+            <input type="number" name="wage" required><br><br>
+            <label>Contract End Date:</label>
+            <input type="date" name="end_date" required><br><br>
+            <button type="submit">Complete Transfer</button>
+        </form>
+    </section>
 </body>
 </html>
