@@ -1,4 +1,4 @@
-.PHONY: default install main init push# Tells make these aren't actual files
+.PHONY: default install main init push pull# Tells make these aren't actual files
 
 default: main
 
@@ -18,3 +18,6 @@ push:
 	git add .
 	git commit -F commit.txt
 	git push origin main
+
+pull:
+	git pull origin main
