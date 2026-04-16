@@ -1,6 +1,6 @@
 # tranfers-db
 
-##how to set up the connections:
+## how to set up the connections:
 
 write the following information in a .env file
 
@@ -12,7 +12,7 @@ DB_NAME= db
 ```
 
 
-##how to set up the database:
+## how to set up the database:
 
 ```
 # for seting up schema and views
@@ -23,7 +23,7 @@ make db FILE = database/triggers.sql
 # write the root password
 ```
 
-##how to start the server:
+## how to start the server:
 
 ```
 make

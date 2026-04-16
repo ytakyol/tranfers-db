@@ -11,6 +11,8 @@ def initialize_database(schema_file):
         user=os.getenv("DB_USER", "root"),
         password=os.getenv("DB_PASS", "password")
     )
+    
+    cursor = db.cursor
 
     with open(schema_file, 'r', encoding='utf-8') as f:
         # SQL dosyasını oku ve ; işaretine göre parçala
