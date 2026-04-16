@@ -1,4 +1,4 @@
-.PHONY: default install main init push pull reset-database# Tells make these aren't actual files
+.PHONY: default install main init push pull reset-database setup# Tells make these aren't actual files
 
 default: main
 
@@ -8,7 +8,10 @@ install:
 main: app.py 
 	python3 app.py
 
-init: init/init.py
+setup: 
+	python3 init/execute_schema.py
+
+init:
 	python3 init/init.py
 
 push:

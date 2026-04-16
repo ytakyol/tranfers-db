@@ -1,12 +1,16 @@
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+# .env dosyasındaki değişkenleri yükle
+load_dotenv()
 
 def initialize_database(schema_file):
     db = mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="password",
+        host=os.getenv("DB_HOST", "127.0.0.1"),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASS", "password")
     )
-    cursor = db.cursor()
 
     with open(schema_file, 'r', encoding='utf-8') as f:
         # SQL dosyasını oku ve ; işaretine göre parçala
@@ -26,12 +30,13 @@ def initialize_database(schema_file):
     db.close()
     print("Schema başarıyla uygulandı!")
 
-# Run it
-initialize_database('database/schema.sql')
+if __name__ == "__main__":
+    # Run it
+    initialize_database('database/schema.sql')
 
-initialize_database('database/player_views.sql')
-initialize_database('database/referee_views.sql')
-initialize_database('database/manager_views.sql')
-initialize_database('database/db_manager_views.sql')
+    initialize_database('database/player_views.sql')
+    initialize_database('database/referee_views.sql')
+    initialize_database('database/manager_views.sql')
+    initialize_database('database/db_manager_views.sql')
 
-# dont add triggers  add it by hand via make db
+    # dont add triggers  add it by hand via make db

@@ -1,12 +1,17 @@
 import pandas as pd
 import mysql.connector
 import hashlib
+import os
+from dotenv import load_dotenv
+
+# .env dosyasındaki değişkenleri yükle
+load_dotenv()
 
 db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'password',
-    'database': 'transfer_db' # Name from your first.sql
+    'host': os.getenv("DB_HOST", "localhost"),
+    'user': os.getenv("DB_USER", "root"),
+    'password': os.getenv("DB_PASS", "password"),
+    'database': os.getenv("DB_NAME", "transfer_db")
 }
 
 def hash_password(password):

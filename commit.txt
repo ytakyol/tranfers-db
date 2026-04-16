@@ -1,1 +1,1 @@
-"execute schema is added."
+"changed makefile updated readme and created environment variables in init files."
