@@ -8,8 +8,8 @@ execute_schema.initialize_database('database/schema.sql')
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '2005',
-    'database': 'Transfer_DB' # Name from your first.sql
+    'password': 'password',
+    'database': 'transfer_db' # Name from your first.sql
 }
 
 def hash_password(password):
