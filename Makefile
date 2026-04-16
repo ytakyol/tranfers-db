@@ -1,9 +1,6 @@
-.PHONY: default install main init push pull# Tells make these aren't actual files
+.PHONY: default install main init push pull reset-database# Tells make these aren't actual files
 
 default: main
-
-
-
 
 install:
 	pip install -r requirements.txt
@@ -21,3 +18,6 @@ push:
 
 pull:
 	git pull origin main
+
+db:
+	mysql -u root -p < $(FILE)

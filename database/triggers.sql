@@ -1,3 +1,5 @@
+USE transfer_db;
+
 DELIMITER $$
 
 CREATE TRIGGER before_insert_player

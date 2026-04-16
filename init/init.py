@@ -1,9 +1,6 @@
 import pandas as pd
 import mysql.connector
 import hashlib
-import execute_schema
-
-execute_schema.initialize_database('database/schema.sql')
 
 db_config = {
     'host': 'localhost',
