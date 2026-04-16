@@ -38,7 +38,7 @@ def signup():
     password = request.form['password']
     role = request.form['role']
     
-    # Password Policy Check (Must be done in Backend) [cite: 158]
+    # Password Policy Check
     if len(password) < 8 or not any(c.isupper() for c in password) or \
        not any(c.islower() for c in password) or not any(c.isdigit() for c in password) or \
        not any(not c.isalnum() for c in password):
@@ -49,31 +49,55 @@ def signup():
     
     try:
         if role == 'db_manager':
-            # DB Managers have their own table [cite: 34]
             query = "INSERT INTO db_managers (username, password) VALUES (%s, %s)"
             execute_query(query, (username, hashed_pw))
+            
         else:
-            # Other users go into persons first (requires additional fields in a real form) [cite: 39, 46, 52]
+            # 1. Capture base Person fields
             name = request.form.get('name', 'Unknown')
             surname = request.form.get('surname', 'Unknown')
             nationality = request.form.get('nationality', 'Unknown')
             dob = request.form.get('dob', '2000-01-01')
             
+            # Insert into 'persons' table
             query = """INSERT INTO persons (username, password, name, surname, nationality, date_of_birth) 
                        VALUES (%s, %s, %s, %s, %s, %s)"""
             execute_query(query, (username, hashed_pw, name, surname, nationality, dob))
             
-            # Fetch the auto-generated person_ID
+            # Fetch the generated person_ID
             person_id = execute_query("SELECT LAST_INSERT_ID() AS id", fetch=True)[0]['id']
             
+            # 2. Capture specific fields based on Role and Insert
             if role == 'player':
-                execute_query("INSERT INTO players (person_ID, market_value, height) VALUES (%s, 100000, 180)", (person_id,))
-            elif role == 'manager':
-                execute_query("INSERT INTO managers (person_ID) VALUES (%s)", (person_id,))
-            elif role == 'referee':
-                execute_query("INSERT INTO referees (person_ID, license_level, years_of_experience) VALUES (%s, 'National', 0)", (person_id,))
+                market_value = request.form.get('market_value', 100000)
+                height = request.form.get('height', 180)
+                main_position = request.form.get('main_position', 'Midfielder')
+                strong_foot = request.form.get('strong_foot', 'Right')
                 
-        flash("Registration successful!")
+                execute_query("""
+                    INSERT INTO players (person_ID, market_value, height, main_position, strong_foot) 
+                    VALUES (%s, %s, %s, %s, %s)""", 
+                    (person_id, market_value, height, main_position, strong_foot))
+                    
+            elif role == 'manager':
+                preferred_formation = request.form.get('preferred_formation', '4-4-2')
+                experience_level = request.form.get('experience_level', 'Intermediate')
+                
+                execute_query("""
+                    INSERT INTO managers (person_ID, preferred_formation, experience_level) 
+                    VALUES (%s, %s, %s)""", 
+                    (person_id, preferred_formation, experience_level))
+                    
+            elif role == 'referee':
+                license_level = request.form.get('license_level', 'National')
+                years_of_experience = request.form.get('years_of_experience', 0)
+                
+                execute_query("""
+                    INSERT INTO referees (person_ID, license_level, years_of_experience) 
+                    VALUES (%s, %s, %s)""", 
+                    (person_id, license_level, years_of_experience))
+                
+        flash("Registration successful! You can now log in.")
     except Exception as e:
         flash(f"Error during registration: {e}")
 

@@ -35,37 +35,104 @@
     <hr>
 
     <section>
-        <h2>Register New User</h2>
-        <form action="/signup" method="POST">
-            <label>Username:</label><br>
-            <input type="text" name="username" required><br><br>
-            
-            <label>Role:</label><br>
-            <select name="role">
-                <option value="db_manager">Database Manager</option>
-                <option value="player">Player</option>
-                <option value="manager">Manager</option>
-                <option value="referee">Referee</option>
-            </select><br><br>
+    <h2>Register New User</h2>
+    <form action="/signup" method="POST">
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br><br>
+        
+        <label>Role:</label><br>
+        <select name="role" id="role-select" onchange="toggleFields()">
+            <option value="db_manager">Database Manager</option>
+            <option value="player">Player</option>
+            <option value="manager">Manager</option>
+            <option value="referee">Referee</option>
+        </select><br><br>
 
-            <label>Name (leave blank if DB Manager):</label><br>
+        <div id="person-fields" style="display: none;">
+            <label>Name:</label><br>
             <input type="text" name="name"><br><br>
-
-            <label>Surname (leave blank if DB Manager):</label><br>
+            <label>Surname:</label><br>
             <input type="text" name="surname"><br><br>
-
-            <label>Nationality (leave blank if DB Manager):</label><br>
+            <label>Nationality:</label><br>
             <input type="text" name="nationality"><br><br>
-
-            <label>Date of Birth (leave blank if DB Manager):</label><br>
+            <label>Date of Birth:</label><br>
             <input type="date" name="dob"><br><br>
+        </div>
 
-            <label>Password:</label><br>
-            <input type="password" name="password" required><br>
-            <small>(Min 8 chars, 1 Upper, 1 Lower, 1 Digit, 1 Special)</small><br><br>
-            
-            <button type="submit">Sign Up</button>
-        </form>
-    </section>
+        <div id="player-fields" style="display: none;">
+            <label>Market Value:</label><br>
+            <input type="number" name="market_value" value="100000"><br><br>
+            <label>Height (cm):</label><br>
+            <input type="number" name="height" value="180"><br><br>
+            <label>Main Position:</label><br>
+            <select name="main_position">
+                <option value="Goalkeeper">Goalkeeper</option>
+                <option value="Defender">Defender</option>
+                <option value="Midfielder">Midfielder</option>
+                <option value="Forward">Forward</option>
+            </select><br><br>
+            <label>Strong Foot:</label><br>
+            <select name="strong_foot">
+                <option value="Right">Right</option>
+                <option value="Left">Left</option>
+                <option value="Both">Both</option>
+            </select><br><br>
+        </div>
+
+        <div id="manager-fields" style="display: none;">
+            <label>Preferred Formation:</label><br>
+            <input type="text" name="preferred_formation" placeholder="e.g., 4-3-3"><br><br>
+            <label>Experience Level:</label><br>
+            <select name="experience_level">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Expert">Expert</option>
+            </select><br><br>
+        </div>
+
+        <div id="referee-fields" style="display: none;">
+            <label>License Level:</label><br>
+            <input type="text" name="license_level" placeholder="e.g., FIFA, National"><br><br>
+            <label>Years of Experience:</label><br>
+            <input type="number" name="years_of_experience" value="0"><br><br>
+        </div>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br>
+        <small>(Min 8 chars, 1 Upper, 1 Lower, 1 Digit, 1 Special)</small><br><br>
+        
+        <button type="submit">Sign Up</button>
+    </form>
+</section>
+
+<script>
+function toggleFields() {
+    const role = document.getElementById('role-select').value;
+    
+    // Hide everything first
+    document.getElementById('person-fields').style.display = 'none';
+    document.getElementById('player-fields').style.display = 'none';
+    document.getElementById('manager-fields').style.display = 'none';
+    document.getElementById('referee-fields').style.display = 'none';
+
+    // DB Managers don't use the 'persons' table, so they only need Username/Password
+    if (role !== 'db_manager') {
+        document.getElementById('person-fields').style.display = 'block';
+    }
+
+    // Show specific fields based on selection
+    if (role === 'player') {
+        document.getElementById('player-fields').style.display = 'block';
+    } else if (role === 'manager') {
+        document.getElementById('manager-fields').style.display = 'block';
+    } else if (role === 'referee') {
+        document.getElementById('referee-fields').style.display = 'block';
+    }
+}
+
+// Run the function once when the page loads to set the initial view
+window.onload = toggleFields;
+</script>
 </body>
 </html>
