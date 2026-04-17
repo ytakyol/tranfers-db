@@ -18,6 +18,6 @@ jobs:
           script: |
             cd ~/app/tranfers-db
             git pull origin main  # Değişiklikleri çeker
-            # make install  Yeni gereksinimleri yükler
+            make install  # Yeni gereksinimleri yükler
             # Flask uygulamasını yeniden başlatmak için (Gunicorn vb. kullanıyorsanız):
             sudo systemctl restart flask_app
