@@ -1,0 +1,23 @@
+name: EC2 Deployment
+
+on:
+  push:
+    branches:
+      - main  # Hangi branch'e push gelince çalışacağını belirler
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH ile EC2'ye Bağlan ve Güncelle
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /app/transfers-db
+            git pull origin main  # Değişiklikleri çeker
+            # make install  Yeni gereksinimleri yükler
+            # Flask uygulamasını yeniden başlatmak için (Gunicorn vb. kullanıyorsanız):
+            sudo systemctl restart your-app-service
