@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app/tranfers-db
+            source .venv/bin/activate
             git pull origin main  # Değişiklikleri çeker
             make install  # Yeni gereksinimleri yükler
             # Flask uygulamasını yeniden başlatmak için (Gunicorn vb. kullanıyorsanız):
