@@ -40,13 +40,13 @@ CREATE TRIGGER before_insert_contract
 BEFORE INSERT ON contracts
 FOR EACH ROW
 BEGIN
-    IF NEW.start_date > NEW.end_date THEN
+    IF NEW.start_date >= NEW.end_date THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Contract start date must be before end date';
     END IF;
     IF (SELECT COUNT(*) FROM contracts 
         WHERE player_id = NEW.player_id AND contract_type = NEW.contract_type
-          AND (start_date <= NEW.end_date AND end_date >= NEW.start_date)) > 0 THEN
+          AND (start_date < NEW.end_date AND end_date > NEW.start_date)) > 0 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Player already has an overlapping contract';
     END IF;
