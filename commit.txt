@@ -1,1 +1,1 @@
-"updated schema"
+"updated inital.sql"
