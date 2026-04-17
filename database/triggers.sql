@@ -1,5 +1,7 @@
 DELIMITER $$
 
+USE transfer_db$$
+
 CREATE TRIGGER before_insert_player
 BEFORE INSERT ON players
 FOR EACH ROW

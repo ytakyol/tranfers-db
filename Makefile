@@ -24,4 +24,4 @@ pull:
 	git pull origin main
 
 db:
-	mysql -u root -p < $(FILE)
+	mysql -u $(USER) -p < $(FILE)

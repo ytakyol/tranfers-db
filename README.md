@@ -28,8 +28,8 @@ DB_NAME= db
 make setup
 
 # for adding triggers
-make db FILE = database/triggers.sql 
-# write the root password
+make db USER=user FILE=database/triggers.sql 
+# write the user password
 ```
 
 ## how to start the server:
