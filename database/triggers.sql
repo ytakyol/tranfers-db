@@ -227,4 +227,24 @@ BEGIN
     END IF;
 END$$
 
+CREATE TRIGGER username_uniqueness_person
+BEFORE INSERT ON persons
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM db_managers WHERE username = NEW.username) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Username already exists';
+    END IF;
+END$$
+
+CREATE TRIGGER username_uniqueness_db_manager
+BEFORE INSERT ON db_managers
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT 1 FROM persons WHERE username = NEW.username) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Username already exists';
+    END IF;
+END$$
+
 DELIMITER ;
