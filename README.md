@@ -1,5 +1,14 @@
 # tranfers-db
 
+## create environment and download the requeirments
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
 ## how to set up the connections:
 
 write the following information in a .env file
