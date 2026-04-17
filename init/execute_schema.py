@@ -12,7 +12,7 @@ def initialize_database(schema_file):
         password=os.getenv("DB_PASS", "password")
     )
     
-    cursor = db.cursor
+    cursor = db.cursor()
 
     with open(schema_file, 'r', encoding='utf-8') as f:
         # SQL dosyasını oku ve ; işaretine göre parçala
@@ -30,15 +30,17 @@ def initialize_database(schema_file):
     db.commit()
     cursor.close()
     db.close()
-    print("Schema başarıyla uygulandı!")
+    print("Schema başarıyla uygulandı: " + schema_file)
 
 if __name__ == "__main__":
     # Run it
-    initialize_database('database/schema.sql')
+    initialize_database('database/new_schema.sql')
 
     initialize_database('database/player_views.sql')
     initialize_database('database/referee_views.sql')
     initialize_database('database/manager_views.sql')
     initialize_database('database/db_manager_views.sql')
+    
+    initialize_database('database/initial.sql')
 
     # dont add triggers  add it by hand via make db

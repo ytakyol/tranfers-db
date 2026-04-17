@@ -10,5 +10,5 @@ SELECT
     s.capacity, 
     GROUP_CONCAT(c.club_name SEPARATOR ', ') as home_clubs 
 FROM stadiums s 
-LEFT JOIN clubs c ON s.stadium_name = c.stadium_name AND s.city = c.city
+LEFT JOIN clubs c ON s.stadium_id = c.stadium_id
 GROUP BY s.stadium_ID, s.stadium_name, s.city, s.capacity;

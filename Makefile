@@ -9,6 +9,7 @@ main: app.py
 	python3 app.py
 
 setup: 
+	sudo systemctl start mysql
 	python3 init/execute_schema.py
 
 init:

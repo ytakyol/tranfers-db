@@ -57,13 +57,12 @@ club_ID INT AUTO_INCREMENT PRIMARY KEY,
 club_name VARCHAR(100) UNIQUE NOT NULL,
 foundation_year INT NOT NULL,
 manager_ID INT UNIQUE, -- May be managerless at some interval
-stadium_name VARCHAR(100),
-city VARCHAR(100),
+stadium_ID INT,
 
 FOREIGN KEY (manager_ID) REFERENCES managers(person_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE,
-FOREIGN KEY (stadium_name, city) REFERENCES stadiums(stadium_name, city)
+FOREIGN KEY (stadium_ID) REFERENCES stadiums(stadium_ID)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 );
