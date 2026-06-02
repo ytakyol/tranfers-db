@@ -3,8 +3,6 @@
 -- Converted from initial2.sql to match new_schema.sql
 -- ============================================================
 
-DROP DATABASE IF EXISTS transfer_db;
-CREATE DATABASE transfer_db;
 USE transfer_db;
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -23,7 +21,6 @@ INSERT INTO stadiums (stadium_ID, stadium_name, city, capacity) VALUES
 -- 2. Persons (combines Person and auth_user)
 -- -------------------------------------------------------
 INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES
-  -- Players
   (1,  'mauro_icardi',     '$2b$12$OFakmg9yVtkkQSFkUJGijeGeIOpnZJpGn4w5CdGm4vyR.UeHBKCUq', 'Mauro',      'Icardi',         'Argentina',   '1993-02-19'),
   (2,  'lucas_torreira',   '$2b$12$rbl.tcUNk3tOoH/EcceP5exeeLwb8lyKq31F8J6kD/oDQsPNEGSqy', 'Lucas',      'Torreira',       'Uruguay',     '1996-02-11'),
   (3,  'davinson_sanchez', '$2b$12$DSq7ER5Lq1.v.IzGfoZpsuR1JFIsZK9r1wIvAwrGg6telVOXYSAJm', 'Davinson',   'Sánchez',        'Colombia',    '1996-06-12'),
@@ -151,13 +148,13 @@ INSERT INTO competitions (competition_ID, name, season, country, competition_typ
 -- 9. Participates (ClubsInCompetition)
 -- -------------------------------------------------------
 INSERT INTO participates (club_ID, competition_ID) VALUES
-  -- Süper Lig 2025/2026 (comp 1)
+
   (1, 1), (2, 1), (3, 1),
-  -- Türkiye Kupası 2025/2026 (comp 2)
+
   (1, 2), (2, 2), (3, 2),
-  -- Premier League 2025/2026 (comp 3)
+
   (4, 3), (5, 3),
-  -- Süper Lig 2024/2025 (comp 4)
+
   (1, 4), (2, 4), (3, 4);
 
 -- -------------------------------------------------------
@@ -166,7 +163,6 @@ INSERT INTO participates (club_ID, competition_ID) VALUES
 -- Contracts 31, 32 are planted invalids loaded before triggers.
 -- -------------------------------------------------------
 INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES
-  -- Galatasaray active contracts
   (1,  1,  1, 'Permanent', 150000, '2024-08-15', '2027-06-30'),
   (2,  2,  1, 'Permanent',  80000, '2023-08-01', '2026-06-30'),
   (3,  3,  1, 'Permanent',  75000, '2023-07-15', '2027-06-30'),
@@ -179,33 +175,25 @@ INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wa
   (11, 11, 1, 'Permanent',  55000, '2024-07-15', '2026-06-30'),
   (12, 12, 1, 'Permanent',  70000, '2023-09-01', '2026-06-30'),
   (13, 13, 1, 'Permanent',  50000, '2023-07-15', '2026-06-30'),
-  -- Tetê: Permanent at MU, on Loan at GS
   (14, 7,  4, 'Permanent',  80000, '2023-07-01', '2027-06-30'),
   (15, 7,  1, 'Loan',       40000, '2025-07-01', '2026-06-30'),
-  -- Fenerbahçe active contracts
   (16, 14, 2, 'Permanent',  95000, '2024-07-15', '2026-06-30'),
   (17, 15, 2, 'Permanent', 100000, '2023-07-01', '2026-06-30'),
   (18, 16, 2, 'Permanent',  55000, '2022-07-01', '2027-06-30'),
   (19, 17, 2, 'Permanent',  65000, '2021-07-01', '2026-06-30'),
   (20, 18, 2, 'Permanent', 110000, '2023-07-15', '2028-06-30'),
   (21, 19, 2, 'Permanent',  80000, '2024-08-01', '2027-06-30'),
-  -- Beşiktaş active contracts
   (22, 20, 3, 'Permanent',  90000, '2024-07-01', '2027-06-30'),
   (23, 21, 3, 'Permanent',  60000, '2024-08-01', '2026-06-30'),
   (24, 22, 3, 'Permanent',  55000, '2022-08-01', '2026-06-30'),
   (25, 23, 3, 'Permanent',  70000, '2023-09-01', '2027-06-30'),
-  -- Manchester United active contracts
   (26, 24, 4, 'Permanent', 300000, '2020-01-15', '2027-06-30'),
   (27, 25, 4, 'Permanent', 250000, '2018-07-01', '2027-06-30'),
   (28, 26, 4, 'Permanent', 120000, '2023-07-01', '2028-06-30'),
-  -- Liverpool active contracts
   (29, 27, 5, 'Permanent', 400000, '2017-07-01', '2027-06-30'),
   (30, 28, 5, 'Permanent', 350000, '2018-01-01', '2027-06-30'),
-  -- PLANTED INVALID (a): Icardi's 2nd active Permanent at MU
   (31, 1,  4, 'Permanent', 180000, '2025-08-01', '2027-08-01'),
-  -- PLANTED INVALID (b): Christensen has only a Loan at GS; no Permanent anywhere
   (32, 29, 1, 'Loan',       50000, '2025-09-01', '2026-06-30'),
-  -- Expired historical contracts
   (33, 1,  5, 'Permanent', 150000, '2022-08-01', '2024-08-14'),
   (34, 14, 1, 'Permanent',  90000, '2023-08-15', '2024-07-14');
 
@@ -220,7 +208,6 @@ INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, t
   (4, 14, NULL, 1, '2023-08-15',        0, 'Free'),
   (5, 2,  NULL, 1, '2023-08-01', 10000000, 'Purchase'),
   (6, 7,  4,    1, '2025-07-01',  2000000, 'Loan'),
-  -- PLANTED INVALID (c): Loan transfer with NULL from_club_id
   (7, 29, NULL, 1, '2025-09-01',  1500000, 'Loan'),
   (8, 19, NULL, 2, '2024-08-01', 16000000, 'Purchase'),
   (9, 20, NULL, 3, '2024-07-01', 10000000, 'Purchase');
@@ -232,11 +219,9 @@ INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, t
 -- PLANTED INVALID (g): Matches 17 & 18 have referee conflicts
 -- -------------------------------------------------------
 INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, match_datetime, home_goals, away_goals, attendance, referee_ID) VALUES
-  -- Past matches with results
   (1,  1, 1, 2, 1, '2025-09-20 19:00:00',  2,    1,    51000, 1001),
   (2,  1, 2, 3, 2, '2025-10-04 20:00:00',  1,    1,    49000, 1002),
   (3,  1, 3, 1, 3, '2025-10-25 20:00:00',  0,    2,    41000, 1001),
-  -- PLANTED INVALID (e): attendance 60000 exceeds RAMS Park capacity 52223
   (4,  1, 1, 3, 1, '2025-11-15 19:00:00',  3,    0,    60000, 1002),
   (5,  1, 2, 1, 2, '2025-12-06 20:00:00',  2,    2,    50000, 1001),
   (6,  1, 3, 2, 3, '2026-02-14 20:00:00',  1,    2,    40000, 1002),
@@ -244,15 +229,12 @@ INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadi
   (8,  3, 4, 5, 4, '2026-02-22 16:30:00',  1,    1,    73000, 1004),
   (9,  2, 1, 3, 1, '2025-11-22 21:00:00',  1,    0,    50000, 1002),
   (10, 4, 1, 2, 1, '2025-04-12 20:00:00',  1,    1,    51000, 1001),
-  -- Future matches (no result yet)
   (11, 3, 5, 4, 5, '2026-04-25 18:00:00',  NULL, NULL, NULL,  1003),
   (12, 1, 1, 2, 1, '2026-05-25 20:00:00',  NULL, NULL, NULL,  1001),
   (13, 1, 1, 3, 1, '2026-06-10 20:00:00',  NULL, NULL, NULL,  1002),
   (14, 1, 2, 3, 2, '2026-06-20 19:00:00',  NULL, NULL, NULL,  1003),
-  -- PLANTED INVALID (f): Matches 15 & 16 – same stadium within 60 min with club conflict
   (15, 2, 1, 3, 1, '2025-09-30 14:00:00',  2,    0,    45000, 1001),
   (16, 2, 2, 1, 1, '2025-09-30 15:00:00',  1,    1,    46000, 1002),
-  -- PLANTED INVALID (g): Matches 17 & 18 – referee 1003 assigned within 120 min
   (17, 3, 4, 5, 4, '2025-11-10 19:00:00',  2,    1,    70000, 1003),
   (18, 1, 1, 2, 1, '2025-11-10 19:30:00',  1,    1,    49000, 1003);
 
@@ -260,57 +242,95 @@ INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadi
 -- 13. Match_Stats
 -- PLANTED INVALID (d): Match 1 – GS has 12 is_starter=TRUE entries
 -- -------------------------------------------------------
-INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES
-  -- === Match 1: GS 2–1 FB (2025-09-20) ===
-  -- GS: 12 starters – PLANTED INVALID (d)
-  (4,  1, 1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.4),
-  (3,  1, 1, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.0),
-  (10, 1, 1, TRUE, 90,  'CB',  0, 0, 1, FALSE, 6.8),
-  (9,  1, 1, TRUE, 90,  'RB',  0, 1, 0, FALSE, 7.5),
-  (13, 1, 1, TRUE, 90,  'LB',  0, 0, 0, FALSE, 6.9),
-  (2,  1, 1, TRUE, 90,  'CDM', 0, 0, 0, FALSE, 7.6),
-  (8,  1, 1, TRUE, 90,  'CM',  0, 0, 0, FALSE, 7.1),
-  (5,  1, 1, TRUE, 90,  'RW',  1, 0, 0, FALSE, 8.2),
-  (6,  1, 1, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.7),
-  (12, 1, 1, TRUE, 90,  'AM',  0, 0, 0, FALSE, 7.0),
-  (1,  1, 1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 8.0),
-  (11, 1, 1, TRUE, 85,  'ST',  0, 0, 0, FALSE, 7.2),
-  -- FB
-  (16, 1, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.8),
-  (18, 1, 2, TRUE, 90,  'CB',  0, 0, 0, FALSE, 6.9),
-  (19, 1, 2, TRUE, 90,  'CB',  0, 0, 1, FALSE, 7.1),
-  (17, 1, 2, TRUE, 90,  'RB',  0, 0, 0, FALSE, 6.7),
-  (20, 1, 2, TRUE, 90,  'LB',  0, 0, 0, FALSE, 7.0),
-  (15, 1, 2, TRUE, 90,  'CDM', 0, 0, 0, FALSE, 7.2),
-  (14, 1, 2, TRUE, 90,  'CM',  0, 0, 0, FALSE, 6.9),
-  (21, 1, 2, FALSE, 0,  'RW',  0, 0, 0, FALSE, NULL),
-  (23, 1, 2, FALSE, 0,  'LW',  0, 0, 0, FALSE, NULL),
-  (14, 1, 2, TRUE, 90,  'AM',  0, 0, 0, FALSE, 7.4),
-  (15, 1, 2, FALSE, 0,  'ST',  0, 0, 0, FALSE, NULL),
-  (14, 1, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.8),
-  -- Match 2: FB 1–1 BJK
-  (16, 2, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
-  (18, 2, 2, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.1),
-  (19, 2, 2, TRUE, 90,  'CB',  0, 0, 0, FALSE, 6.8),
-  (17, 2, 2, TRUE, 90,  'RB',  0, 0, 1, FALSE, 6.9),
-  (20, 2, 2, TRUE, 90,  'LB',  0, 0, 0, FALSE, 7.0),
-  (15, 2, 2, TRUE, 90,  'CDM', 0, 0, 0, FALSE, 7.2),
-  (14, 2, 2, TRUE, 90,  'CM',  0, 0, 0, FALSE, 7.1),
-  (21, 2, 2, TRUE, 90,  'RW',  0, 0, 0, FALSE, 6.8),
-  (23, 2, 2, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.5),
-  (14, 2, 2, TRUE, 90,  'AM',  0, 0, 0, FALSE, 6.9),
-  (15, 2, 2, FALSE, 0,  'ST',  0, 0, 0, FALSE, NULL),
-  (14, 2, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.3),
-  (22, 2, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.2),
-  (13, 2, 3, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.0),
-  (20, 2, 3, TRUE, 90,  'CB',  0, 0, 0, FALSE, 6.9),
-  (17, 2, 3, TRUE, 90,  'RB',  0, 0, 0, FALSE, 7.0),
-  (17, 2, 3, TRUE, 90,  'LB',  0, 0, 0, FALSE, 6.8),
-  (8,  2, 3, TRUE, 90,  'CDM', 0, 0, 1, FALSE, 7.1),
-  (2,  2, 3, TRUE, 90,  'CM',  0, 0, 0, FALSE, 7.3),
-  (21, 2, 3, TRUE, 90,  'RW',  0, 0, 0, FALSE, 6.9),
-  (12, 2, 3, TRUE, 90,  'LW',  1, 0, 0, FALSE, 7.6),
-  (5,  2, 3, TRUE, 90,  'AM',  0, 0, 0, FALSE, 6.8),
-  (20, 2, 3, FALSE, 0,  'ST',  0, 0, 0, FALSE, NULL);
+INSERT INTO match_stats
+  (match_id, player_id, club_id, is_starter, minutes_played,
+   position_in_match, goals, assists, yellow_cards, red_cards, rating)
+VALUES
+  (1,  4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.4),
+  (1,  3,  1, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.0),
+  (1,  10, 1, TRUE, 90,  'CB',  0, 0, 1, FALSE, 6.8),
+  (1,  9,  1, TRUE, 90,  'RB',  0, 1, 0, FALSE, 7.5),
+  (1,  13, 1, TRUE, 90,  'LB',  0, 0, 0, FALSE, 6.9),
+  (1,  2,  1, TRUE, 90,  'CDM', 0, 0, 0, FALSE, 7.6),
+  (1,  8,  1, TRUE, 90,  'CM',  0, 0, 0, FALSE, 7.1),
+  (1,  5,  1, TRUE, 90,  'RW',  1, 0, 0, FALSE, 8.2),
+  (1,  6,  1, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.7),
+  (1,  12, 1, TRUE, 90,  'AM',  0, 0, 0, FALSE, 7.0),
+  (1,  1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 8.0),
+  (1,  11, 1, TRUE, 85,  'ST',  0, 0, 0, FALSE, 7.2),
+  (1,  16, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.8),
+  (1,  17, 2, TRUE, 90,  'RB',  0, 0, 1, FALSE, 6.5),
+  (1,  18, 2, TRUE, 90,  'CM',  0, 0, 0, FALSE, 7.0),
+  (1,  15, 2, TRUE, 90,  'AM',  0, 1, 0, FALSE, 7.4),
+  (1,  19, 2, TRUE, 90,  'LW',  0, 0, 0, FALSE, 6.7),
+  (1,  14, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.6),
+  (2,  16, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (2,  17, 2, TRUE, 90,  'RB',  0, 0, 0, FALSE, 6.9),
+  (2,  18, 2, TRUE, 90,  'CM',  1, 0, 0, FALSE, 7.8),
+  (2,  15, 2, TRUE, 90,  'AM',  0, 1, 1, FALSE, 7.2),
+  (2,  19, 2, TRUE, 90,  'RW',  0, 0, 0, FALSE, 6.5),
+  (2,  14, 2, TRUE, 90,  'ST',  0, 0, 0, FALSE, 6.8),
+  (2,  22, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.1),
+  (2,  20, 3, TRUE, 90,  'AM',  1, 0, 0, FALSE, 8.0),
+  (2,  21, 3, TRUE, 90,  'ST',  0, 0, 0, FALSE, 6.5),
+  (2,  23, 3, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.0),
+  (3,  4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.5),
+  (3,  5,  1, TRUE, 90,  'RW',  1, 0, 0, FALSE, 8.3),
+  (3,  1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 8.1),
+  (3,  6,  1, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.4),
+  (3,  2,  1, TRUE, 90,  'CDM', 0, 1, 1, FALSE, 7.5),
+  (3,  22, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.4),
+  (3,  20, 3, TRUE, 90,  'AM',  0, 0, 0, FALSE, 6.7),
+  (3,  21, 3, TRUE, 90,  'ST',  0, 0, 1, FALSE, 6.0),
+  (4,  4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.2),
+  (4,  1,  1, TRUE, 90,  'ST',  2, 0, 0, FALSE, 8.7),
+  (4,  5,  1, TRUE, 90,  'RW',  1, 1, 0, FALSE, 8.4),
+  (4,  6,  1, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.5),
+  (4,  22, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 5.5),
+  (4,  21, 3, TRUE, 90,  'ST',  0, 0, 1, FALSE, 6.0),
+  (5,  4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (5,  1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.8),
+  (5,  5,  1, TRUE, 90,  'RW',  1, 0, 1, FALSE, 7.6),
+  (5,  6,  1, TRUE, 80,  'LW',  0, 1, 0, FALSE, 7.2),
+  (5,  16, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.8),
+  (5,  14, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.4),
+  (5,  18, 2, TRUE, 90,  'CM',  1, 1, 1, FALSE, 7.8),
+  (5,  15, 2, TRUE, 90,  'AM',  0, 1, 0, FALSE, 7.2),
+  (6,  22, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.5),
+  (6,  20, 3, TRUE, 90,  'AM',  1, 0, 0, FALSE, 7.5),
+  (6,  21, 3, TRUE, 90,  'ST',  0, 1, 0, FALSE, 6.8),
+  (6,  16, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.2),
+  (6,  14, 2, TRUE, 90,  'ST',  2, 0, 0, FALSE, 8.4),
+  (6,  18, 2, TRUE, 90,  'CM',  0, 1, 0, FALSE, 7.5),
+  (6,  19, 2, TRUE, 90,  'LW',  0, 1, 1, FALSE, 7.0),
+  (7,  27, 5, TRUE, 90,  'RW',  2, 0, 0, FALSE, 9.0),
+  (7,  28, 5, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.5),
+  (7,  24, 4, TRUE, 90,  'AM',  1, 0, 1, FALSE, 7.4),
+  (7,  25, 4, TRUE, 90,  'LW',  0, 0, 0, FALSE, 6.8),
+  (7,  26, 4, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.5),
+  (8,  24, 4, TRUE, 90,  'AM',  1, 0, 0, FALSE, 8.0),
+  (8,  25, 4, TRUE, 90,  'LW',  0, 1, 0, FALSE, 7.4),
+  (8,  26, 4, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (8,  27, 5, TRUE, 90,  'RW',  1, 0, 1, FALSE, 7.5),
+  (8,  28, 5, TRUE, 90,  'CB',  0, 0, 0, FALSE, 7.2),
+  (9,  4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (9,  1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.8),
+  (9,  5,  1, TRUE, 90,  'RW',  0, 1, 0, FALSE, 7.4),
+  (9,  22, 3, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.8),
+  (9,  21, 3, TRUE, 90,  'ST',  0, 0, 0, FALSE, 6.0),
+  (10, 4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (10, 1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.5),
+  (10, 5,  1, TRUE, 90,  'RW',  0, 1, 1, FALSE, 7.0),
+  (10, 16, 2, TRUE, 90,  'GK',  0, 0, 0, FALSE, 6.8),
+  (10, 14, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.4),
+  (10, 18, 2, TRUE, 90,  'CM',  0, 1, 0, FALSE, 7.0),
+  (15, 4,  1, TRUE, 90,  'GK',  0, 0, 0, FALSE, 7.0),
+  (15, 1,  1, TRUE, 90,  'ST',  2, 0, 0, FALSE, 8.5),
+  (16, 14, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.5),
+  (16, 1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.4),
+  (17, 24, 4, TRUE, 90,  'AM',  2, 0, 0, FALSE, 9.2),
+  (17, 27, 5, TRUE, 90,  'RW',  1, 0, 0, FALSE, 7.8),
+  (18, 1,  1, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.6),
+  (18, 14, 2, TRUE, 90,  'ST',  1, 0, 0, FALSE, 7.4);
 
 SET FOREIGN_KEY_CHECKS = 1;
