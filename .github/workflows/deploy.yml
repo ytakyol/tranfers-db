@@ -37,4 +37,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app/tranfers-db
+            source .venv/bin/activate
             make schemas
