@@ -3,9 +3,11 @@ name: EC2 Deployment
 on:
   push:
     branches:
-      - main  # Hangi branch'e push gelince çalışacağını belirler
+      - main
+  workflow_dispatch: # GitHub arayüzünden manuel tetikleme sağlayan tetikleyici
 
 jobs:
+  # Otomatik çalışan mevcut job'ınız
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +20,21 @@ jobs:
           script: |
             cd ~/app/tranfers-db
             source .venv/bin/activate
-            git pull origin main  # Değişiklikleri çeker
-            make install  # Yeni gereksinimleri yükler
-            # Flask uygulamasını yeniden başlatmak için (Gunicorn vb. kullanıyorsanız):
+            git pull origin main
+            make install
             sudo systemctl restart flask_app
+
+  # Sadece manuel tetiklendiğinde çalışan yeni job
+  manuel-deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: SSH ile EC2'ye Bağlan ve Sadece Yeniden Başlat
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/app/tranfers-db
+            make schemas
