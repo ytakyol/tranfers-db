@@ -149,7 +149,7 @@ INSERT INTO Club (club_ID, club_name, foundation_year, stadium_name, city, manag
   (1, 'Galatasaray',       1905, 'RAMS Park',      'Istanbul',   2001),
   (2, 'Fenerbahçe',        1907, 'Ülker Stadium',  'Istanbul',   2002),
   (3, 'Beşiktaş',          1903, 'Tüpraş Stadium', 'Istanbul',   2003),
-  (4, 'Manchester United', 1878, 'Old Trafford',   'Manchester', 2004),
+  (4, 'Manchester United', 187a8, 'Old Trafford',   'Manchester', 2004),
   (5, 'Liverpool',         1892, 'Anfield',        'Liverpool',  NULL);
 
 -- -------------------------------------------------------

@@ -43,7 +43,7 @@ schemas:
 	$(MAKE) db FILE=database/referee_views.sql
 	$(MAKE) db FILE=database/manager_views.sql
 	$(MAKE) db FILE=database/db_manager_views.sql
-	$(MAKE) db FILE=database/initial2.sql
+	$(MAKE) db FILE=database/initial3.sql
 	$(MAKE) db FILE=database/triggers.sql
 	echo "Succesfuly finished execution."
 

@@ -76,8 +76,17 @@ def signup():
             execute_query(query, (username, hashed_pw, name, surname, nationality, dob))
             
             # Fetch the generated person_ID
-            person_id = execute_query("SELECT LAST_INSERT_ID() AS id", fetch=True)[0]['id']
-            
+            last_insert_result = execute_query("SELECT LAST_INSERT_ID() AS id", fetch=True)
+            if not last_insert_result:
+                raise Exception("Failed to retrieve the last inserted person ID.")
+            first_row = last_insert_result[0]
+            if isinstance(first_row, dict):
+                person_id = first_row.get('id')
+            else:
+                person_id = first_row[0] if len(first_row) > 0 else None
+            if person_id is None:
+                raise Exception("Failed to retrieve the last inserted person ID.")
+
             # 2. Capture specific fields based on Role and Insert
             if role == 'player':
                 market_value = request.form.get('market_value', 100000)
@@ -120,19 +129,20 @@ def login():
     password = request.form['password']
     hashed_pw = hash_password(password)
 
-    # Check DB Managers [cite: 34]
+    # Check DB Managers 
     dbm_query = "SELECT * FROM db_managers WHERE username = %s AND password = %s"
     db_manager = execute_query(dbm_query, (username, hashed_pw), fetch=True)
     if db_manager:
         session['user'] = {'username': username, 'role': 'db_manager'}
         return redirect('/db_manager')
 
-    # Check Persons [cite: 39, 45, 51]
+    # Check Persons 
     person_query = "SELECT * FROM persons WHERE username = %s AND password = %s"
     person = execute_query(person_query, (username, hashed_pw), fetch=True)
     
     if person:
-        p_id = person[0]['person_ID']
+        person_record = person[0]
+        p_id = person_record['person_ID'] if isinstance(person_record, dict) else person_record[0]
         # Determine specific role
         if execute_query("SELECT 1 FROM players WHERE person_ID = %s", (p_id,), fetch=True):
             session['user'] = {'id': p_id, 'username': username, 'role': 'player'}
