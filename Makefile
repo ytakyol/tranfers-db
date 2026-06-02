@@ -10,10 +10,7 @@ main: app.py
 
 setup: 
 	sudo systemctl start mysql
-	python3 init/execute_schema.py
-
-init:
-	python3 init/init.py
+	$(MAKE) schemas 
 
 push:
 	git add .
@@ -24,4 +21,14 @@ pull:
 	git pull origin main
 
 db:
-	mysql -u $(USER) -p < $(FILE)
+	mysql -u $(USER) -p$(PASSWORD) < $(FILE)
+
+schemas:
+	$(MAKE) db USER=root PASSWORD=password FILE=database/new_schema.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/player_views.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/referee_views.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/manager_views.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/db_manager_views.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/initial.sql
+	$(MAKE) db USER=root PASSWORD=password FILE=database/triggers.sql
+
