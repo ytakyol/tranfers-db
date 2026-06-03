@@ -41,6 +41,6 @@ if __name__ == "__main__":
     initialize_database('database/manager_views.sql')
     initialize_database('database/db_manager_views.sql')
     
-    initialize_database('database/initial3.sql')
+    initialize_database('database/initial4.sql')
 
     # dont add triggers  add it by hand via make db

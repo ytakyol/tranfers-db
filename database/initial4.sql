@@ -1,238 +1,339 @@
 USE transfer_db;
 
--- ==========================================
--- 1. DB MANAGERS
--- ==========================================
-INSERT INTO db_managers (username, password) VALUES
-('kevin', SHA2('K3v!n#2024', 256)),
-('bob', SHA2('Bob@Secure88', 256)),
-('maria', SHA2('M@r1a321!', 256));
+-- DB Managers
+INSERT INTO db_managers (username, password) VALUES ('kevin', SHA2('K3v!n#2024', 256));
+INSERT INTO db_managers (username, password) VALUES ('bob', SHA2('Bob@Secure88', 256));
+INSERT INTO db_managers (username, password) VALUES ('maria', SHA2('M@r1a321!', 256));
 
--- ==========================================
--- 2. PERSONS (Ana Tablo)
--- ==========================================
-INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES
--- Players
-(1, 'mauro_icardi', SHA2('Icard1@GS!', 256), 'Mauro', 'Icardi', 'Argentina', '1993-02-19'),
-(2, 'lucas_torreira', SHA2('Tor3ira#22', 256), 'Lucas', 'Torreira', 'Uruguay', '1996-02-11'),
-(3, 'davinson_sanchez', SHA2('Dav!nson22', 256), 'Davinson', 'Sánchez', 'Colombia', '1996-06-12'),
-(4, 'fernando_muslera', SHA2('Mus#Lera!1', 256), 'Fernando', 'Muslera', 'Uruguay', '1986-06-16'),
-(5, 'hakim_ziyech', SHA2('Z!yech@22', 256), 'Hakim', 'Ziyech', 'Morocco', '1993-03-19'),
-(6, 'kerem_akturkoglu', SHA2('Ker3m!Ak#,', 256), 'Kerem', 'Aktürkoğlu', 'Türkiye', '1998-10-21'),
-(7, 'tete_bra', SHA2('T3te@Bra!1', 256), 'Tetê', 'Mota', 'Brazil', '2000-02-13'),
-(8, 'wilfried_zaha', SHA2('Z@h@GS2024', 256), 'Wilfried', 'Zaha', 'Cote d''Ivoire', '1992-11-10'),
-(9, 'baris_alper', SHA2('B@r!sBAY7', 256), 'Barış Alper', 'Yılmaz', 'Türkiye', '2000-05-23'),
-(10, 'abdülkerim_b', SHA2('Abdülk3r!m', 256), 'Abdülkerim', 'Bardakcı', 'Türkiye', '1994-09-07'),
-(11, 'michy_batshuayi', SHA2('M1chy!Bats', 256), 'Michy', 'Batshuayi', 'Belgium', '1993-10-02'),
-(12, 'dries_mertens', SHA2('M3rt3ns#10', 256), 'Dries', 'Mertens', 'Belgium', '1987-05-06'),
-(13, 'kaan_ayhan', SHA2('K@@n!Ayhan', 256), 'Kaan', 'Ayhan', 'Türkiye', '1995-03-10'),
-(14, 'edin_dzeko', SHA2('Dz3ko!FB1', 256), 'Edin', 'Džeko', 'Bosnia', '1986-03-17'),
-(15, 'dusan_tadic', SHA2('T@dic#FB1!', 256), 'Dušan', 'Tadić', 'Serbia', '1988-11-20'),
-(16, 'irfan_can_e', SHA2('!rfanCan1#', 256), 'İrfan Can', 'Eğribayat', 'Türkiye', '1998-06-30'),
-(17, 'bright_o_samuel', SHA2('Br!ghtOS1@', 256), 'Bright', 'Osayi-Samuel', 'Nigeria', '1997-12-31'),
-(18, 'sebastian_szym', SHA2('Sz!man@2024', 256), 'Sebastian', 'Szymański', 'Poland', '1999-05-10'),
-(19, 'cengiz_under', SHA2('C3ng!zUnd1', 256), 'Cengiz', 'Ünder', 'Türkiye', '1997-07-14'),
-(20, 'rafa_silva', SHA2('R@faSilva!1', 256), 'Rafa', 'Silva', 'Portugal', '1993-05-17'),
-(21, 'gedson_fernandes', SHA2('G3dson#BJK', 256), 'Gedson', 'Fernandes', 'Portugal', '1999-01-09'),
-(22, 'vincent_aboubakar', SHA2('Abou!BJK10', 256), 'Vincent', 'Aboubakar', 'Cameroon', '1992-01-22'),
-(23, 'bruno_fernandes', SHA2('Brun0!MUFC', 256), 'Bruno', 'Fernandes', 'Portugal', '1994-09-08'),
-(24, 'marcus_rashford', SHA2('R@shford10', 256), 'Marcus', 'Rashford', 'England', '1997-10-31'),
-(25, 'casemiro_18', SHA2('C@s3m1ro18', 256), 'Carlos', 'Casemiro', 'Brazil', '1992-02-23'),
-(26, 'mohamed_salah', SHA2('S@lah!LFC1', 256), 'Mohamed', 'Salah', 'Egypt', '1992-06-15'),
-(27, 'virgil_van_dijk', SHA2('VVD!LFC44', 256), 'Virgil', 'van Dijk', 'Netherlands', '1991-07-08'),
-(28, 'alexis_mac_all', SHA2('Al3x!sMacA', 256), 'Alexis', 'Mac Allister', 'Argentina', '1998-12-24'),
-(29, 'victor_osimhen', SHA2('Os1mh3n!GS', 256), 'Victor', 'Osimhen', 'Nigeria', '1998-12-29'),
-(30, 'andreas_christ', SHA2('Andre@s#1!', 256), 'Andreas', 'Christensen', 'Denmark', '1996-04-10'),
+-- Stadiums
+INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES (1, 'RAMS Park', 'Istanbul', 52223);
+INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES (2, 'Ülker Stadium', 'Istanbul', 50509);
+INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES (3, 'Tüpraş Stadium', 'Istanbul', 41903);
+INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES (4, 'Old Trafford', 'Manchester', 74310);
+INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES (5, 'Anfield', 'Liverpool', 53394);
+
+-- Persons (Managers)
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2001, 'okan_buruk', SHA2('Okan@Mng25', 256), 'Okan', 'Buruk', 'Türkiye', '1973-10-19');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2002, 'jose_mourinho', SHA2('Jose#Spec1', 256), 'José', 'Mourinho', 'Portugal', '1963-01-26');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2003, 'ole_solskjaer', SHA2('Ole$2024!', 256), 'Ole', 'Solskjær', 'Norway', '1973-02-26');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2004, 'erik_ten_hag', SHA2('Erik@TH2024', 256), 'Erik', 'ten Hag', 'Netherlands', '1970-02-02');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2005, 'arne_slot', SHA2('Arne$Slot1!', 256), 'Arne', 'Slot', 'Netherlands', '1978-09-17');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2006, 'carlo_ancelotti', SHA2('Carlo#Anc!1', 256), 'Carlo', 'Ancelotti', 'Italy', '1959-06-10');
+
+-- Persons (Referees)
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (1001, 'cuneyt_cakir', SHA2('Cun3yt!Ref', 256), 'Cüneyt', 'Çakır', 'Türkiye', '1976-11-23');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (1002, 'halil_meler', SHA2('H@lil#Ref2', 256), 'Halil', 'Meler', 'Türkiye', '1986-08-22');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (1003, 'michael_oliver', SHA2('M!chael@Ref3', 256), 'Michael', 'Oliver', 'England', '1985-02-20');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (1004, 'anthony_taylor', SHA2('Ant#Taylor4!', 256), 'Anthony', 'Taylor', 'England', '1978-10-20');
+
+-- Persons (Players)
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (1, 'mauro_icardi', SHA2('Icard1@GS!', 256), 'Mauro', 'Icardi', 'Argentina', '1993-02-19');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (2, 'lucas_torreira', SHA2('Tor3ira#22', 256), 'Lucas', 'Torreira', 'Uruguay', '1996-02-11');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (3, 'davinson_sanchez', SHA2('Dav!nson22', 256), 'Davinson', 'Sánchez', 'Colombia', '1996-06-12');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (4, 'fernando_muslera', SHA2('Mus#Lera!1', 256), 'Fernando', 'Muslera', 'Uruguay', '1986-06-16');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (5, 'hakim_ziyech', SHA2('Z!yech@22', 256), 'Hakim', 'Ziyech', 'Morocco', '1993-03-19');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (6, 'kerem_akturkoglu', SHA2('Ker3m!Ak#', 256), 'Kerem', 'Aktürkoğlu', 'Türkiye', '1998-10-21');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (7, 'tete_bra', SHA2('T3te@Bra!1', 256), 'Tetê', 'Mota', 'Brazil', '2000-02-13');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (8, 'yunus_akgun', SHA2('Yunus@Akg1!', 256), 'Yunus', 'Akgün', 'Türkiye', '2000-07-07');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (9, 'sacha_boey', SHA2('Sach@Boey1!', 256), 'Sacha', 'Boey', 'France', '2000-09-13');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (10, 'abdulkerim_b', SHA2('Abd#Kerim1!', 256), 'Abdülkerim', 'Bardakcı', 'Türkiye', '1995-09-07');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (11, 'dries_mertens', SHA2('Dr!es@Mert', 256), 'Dries', 'Mertens', 'Belgium', '1987-05-06');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (12, 'wilfried_zaha', SHA2('Z@ha2024!1', 256), 'Wilfried', 'Zaha', 'Türkiye', '1992-11-10');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (13, 'kaan_ayhan', SHA2('Ka@nAyh1!', 256), 'Kaan', 'Ayhan', 'Türkiye', '1995-03-10');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (14, 'edin_dzeko', SHA2('Dz3ko!FB1', 256), 'Edin', 'Džeko', 'Bosnia', '1986-03-17');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (15, 'dusan_tadic', SHA2('T@dic#FB1!', 256), 'Dušan', 'Tadić', 'Serbia', '1988-11-20');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (16, 'irfan_can_e', SHA2('!rfanCan1#', 256), 'İrfan Can', 'Eğribayat', 'Türkiye', '1998-06-30');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (17, 'bright_o_samuel', SHA2('Br!ghtOS1@', 256), 'Bright', 'Osayi-Samuel', 'Nigeria', '1997-12-31');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (18, 'sebastian_szym', SHA2('Sz!man@2024', 256), 'Sebastian', 'Szymański', 'Poland', '1999-05-10');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (19, 'cengiz_under', SHA2('C3ng!zUnd1', 256), 'Cengiz', 'Ünder', 'Türkiye', '1997-07-14');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (20, 'rafa_silva', SHA2('R@faSilva!1', 256), 'Rafa', 'Silva', 'Portugal', '1993-05-17');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (21, 'vincent_abou', SHA2('V!nce@Abou1', 256), 'Vincent', 'Aboubakar', 'Cameroon', '1992-01-22');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (22, 'mert_gunok', SHA2('M3rt@Gun1!', 256), 'Mert', 'Günok', 'Türkiye', '1989-03-01');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (23, 'ernest_muci', SHA2('Ern3st@Mu1!', 256), 'Ernest', 'Muçi', 'Albania', '2001-03-19');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (24, 'bruno_fernandes', SHA2('Br!Fern@Mu1', 256), 'Bruno', 'Fernandes', 'Portugal', '1994-09-08');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (25, 'marcus_rashford', SHA2('R@shFordMU!1', 256), 'Marcus', 'Rashford', 'England', '1997-10-31');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (26, 'andre_onana', SHA2('On@n@MU!1', 256), 'André', 'Onana', 'Cameroon', '1996-04-02');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (27, 'mohamed_salah', SHA2('S@lah!LFC1', 256), 'Mohamed', 'Salah', 'Egypt', '1992-06-15');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (28, 'virgil_van_dijk', SHA2('V!rgilVD@1', 256), 'Virgil', 'van Dijk', 'Netherlands', '1991-07-08');
+INSERT INTO persons (person_ID, username, password, name, surname, nationality, date_of_birth) VALUES (29, 'andreas_christ', SHA2('Andre@s#1!', 256), 'Andreas', 'Christensen', 'Denmark', '1996-04-10');
+
 -- Managers
-(2001, 'okan_buruk', SHA2('Okan@Mng25', 256), 'Okan', 'Buruk', 'Türkiye', '1973-10-19'),
-(2002, 'jose_mourinho', SHA2('Jose#Spec1', 256), 'José', 'Mourinho', 'Portugal', '1963-01-26'),
-(2003, 'ole_solskjaer', SHA2('Ole$2024!', 256), 'Ole', 'Solskjær', 'Norway', '1973-02-26'),
-(2004, 'erik_ten_hag', SHA2('Erik@TH2024', 256), 'Erik', 'ten Hag', 'Netherlands', '1970-02-02'),
-(2005, 'arne_slot', SHA2('Arne$Slot1!', 256), 'Arne', 'Slot', 'Netherlands', '1978-09-17'),
-(2006, 'carlo_ancelotti', SHA2('Carlo#Anc!1', 256), 'Carlo', 'Ancelotti', 'Italy', '1959-06-10'),
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2001, '4-2-3-1', 'Advanced');
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2002, '4-2-3-1', 'Expert');
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2003, '4-3-3', 'Intermediate');
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2004, '4-3-3', 'Expert');
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2005, '4-2-3-1', 'Advanced');
+INSERT INTO managers (person_ID, preferred_formation, experience_level) VALUES (2006, '4-3-3', 'Expert');
+
 -- Referees
-(1001, 'cuneyt_cakir', SHA2('Cun3yt!Ref', 256), 'Cüneyt', 'Çakır', 'Türkiye', '1976-11-23'),
-(1002, 'halil_meler', SHA2('H@lil#Ref2', 256), 'Halil', 'Meler', 'Türkiye', '1986-08-22'),
-(1003, 'michael_oliver', SHA2('M!chael@Ref3', 256), 'Michael', 'Oliver', 'England', '1985-02-20'),
-(1004, 'anthony_taylor', SHA2('Ant#Taylor4!', 256), 'Anthony', 'Taylor', 'England', '1978-10-20');
+INSERT INTO referees (person_ID, license_level, years_of_experience) VALUES (1001, 'FIFA', 20);
+INSERT INTO referees (person_ID, license_level, years_of_experience) VALUES (1002, 'FIFA', 12);
+INSERT INTO referees (person_ID, license_level, years_of_experience) VALUES (1003, 'UEFA Elite', 15);
+INSERT INTO referees (person_ID, license_level, years_of_experience) VALUES (1004, 'UEFA Elite', 18);
 
--- ==========================================
--- 3. PLAYERS (Alt Tablo)
--- ==========================================
-INSERT INTO players (player_ID, market_value, main_position, strong_foot, height) VALUES
-(1, 12000000, 'Forward', 'Right', 184),
-(2, 15000000, 'Midfielder', 'Right', 168),
-(3, 20000000, 'Defender', 'Right', 187),
-(4, 1500000, 'Goalkeeper', 'Right', 190),
-(5, 12000000, 'Forward', 'Left', 181),
-(6, 18000000, 'Forward', 'Right', 173),
-(7, 8000000, 'Forward', 'Left', 175),
-(8, 10000000, 'Forward', 'Right', 180),
-(9, 14000000, 'Forward', 'Right', 186),
-(10, 7500000, 'Defender', 'Left', 185),
-(11, 8500000, 'Forward', 'Right', 185),
-(12, 2000000, 'Midfielder', 'Right', 169),
-(13, 7000000, 'Defender', 'Right', 184),
-(14, 3500000, 'Forward', 'Right', 193),
-(15, 4000000, 'Midfielder', 'Left', 181),
-(16, 6000000, 'Goalkeeper', 'Right', 188),
-(17, 12000000, 'Defender', 'Right', 174),
-(18, 22000000, 'Midfielder', 'Right', 175),
-(19, 16000000, 'Forward', 'Left', 173),
-(20, 18000000, 'Midfielder', 'Right', 178),
-(21, 15000000, 'Midfielder', 'Right', 181),
-(22, 4500000, 'Forward', 'Right', 184),
-(23, 70000000, 'Midfielder', 'Right', 179),
-(24, 60000000, 'Forward', 'Right', 180),
-(25, 15000000, 'Midfielder', 'Right', 185),
-(26, 65000000, 'Forward', 'Left', 175),
-(27, 30000000, 'Defender', 'Right', 195),
-(28, 65000000, 'Midfielder', 'Right', 176),
-(29, 100000000, 'Forward', 'Right', 185),
-(30, 30000000, 'Defender', 'Right', 187);
+-- Players
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (1, 'Forward', 'Right', 12000000.0, 184);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (2, 'Midfielder', 'Right', 15000000.0, 168);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (3, 'Defender', 'Right', 20000000.0, 187);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (4, 'Goalkeeper', 'Right', 1500000.0, 190);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (5, 'Forward', 'Left', 12000000.0, 181);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (6, 'Forward', 'Right', 18000000.0, 173);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (7, 'Forward', 'Right', 8000000.0, 172);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (8, 'Midfielder', 'Right', 10000000.0, 178);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (9, 'Defender', 'Right', 22000000.0, 180);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (10, 'Defender', 'Left', 12000000.0, 192);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (11, 'Forward', 'Right', 3000000.0, 169);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (12, 'Forward', 'Right', 12000000.0, 180);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (13, 'Defender', 'Right', 7000000.0, 184);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (14, 'Forward', 'Right', 3500000.0, 193);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (15, 'Midfielder', 'Left', 4000000.0, 181);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (16, 'Goalkeeper', 'Right', 6000000.0, 188);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (17, 'Defender', 'Right', 12000000.0, 174);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (18, 'Midfielder', 'Right', 22000000.0, 175);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (19, 'Forward', 'Left', 16000000.0, 173);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (20, 'Midfielder', 'Right', 10000000.0, 173);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (21, 'Forward', 'Right', 5000000.0, 184);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (22, 'Goalkeeper', 'Right', 4000000.0, 195);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (23, 'Forward', 'Right', 8000000.0, 174);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (24, 'Midfielder', 'Right', 65000000.0, 179);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (25, 'Forward', 'Right', 45000000.0, 180);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (26, 'Goalkeeper', 'Right', 30000000.0, 190);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (27, 'Forward', 'Left', 60000000.0, 175);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (28, 'Defender', 'Right', 40000000.0, 193);
+INSERT INTO players (person_ID, main_position, strong_foot, market_value, height) VALUES (29, 'Defender', 'Right', 18000000.0, 187);
 
--- ==========================================
--- 4. MANAGERS (Alt Tablo)
--- ==========================================
-INSERT INTO managers (manager_ID, preferred_formation, experience_level) VALUES
-(2001, '4-2-3-1', 'Advanced'),
-(2002, '4-2-3-1', 'Expert'),
-(2003, '4-3-3', 'Intermediate'),
-(2004, '4-3-3', 'Expert'),
-(2005, '4-2-3-1', 'Advanced'),
-(2006, '4-3-3', 'Expert');
+-- Clubs
+INSERT INTO clubs (club_ID, club_name, foundation_year, stadium_ID, manager_ID) VALUES (1, 'Galatasaray', 1905, 1, 2001);
+INSERT INTO clubs (club_ID, club_name, foundation_year, stadium_ID, manager_ID) VALUES (2, 'Fenerbahçe', 1907, 2, 2002);
+INSERT INTO clubs (club_ID, club_name, foundation_year, stadium_ID, manager_ID) VALUES (3, 'Beşiktaş', 1903, 3, 2003);
+INSERT INTO clubs (club_ID, club_name, foundation_year, stadium_ID, manager_ID) VALUES (4, 'Manchester United', 1878, 4, 2004);
+INSERT INTO clubs (club_ID, club_name, foundation_year, stadium_ID, manager_ID) VALUES (5, 'Liverpool', 1892, 5, NULL);
 
--- ==========================================
--- 5. REFEREES (Alt Tablo)
--- ==========================================
-INSERT INTO referees (referee_id, license_level, years_of_experience) VALUES
-(1001, 'FIFA', 20),
-(1002, 'FIFA', 12),
-(1003, 'UEFA Elite', 15),
-(1004, 'UEFA Elite', 18);
+-- Competitions
+INSERT INTO competitions (competition_ID, name, season, country, competition_type) VALUES (1, 'Süper Lig', '2025/2026', 'Türkiye', 'League');
+INSERT INTO competitions (competition_ID, name, season, country, competition_type) VALUES (2, 'Türkiye Kupası', '2025/2026', 'Türkiye', 'Cup');
+INSERT INTO competitions (competition_ID, name, season, country, competition_type) VALUES (3, 'Premier League', '2025/2026', 'England', 'League');
+INSERT INTO competitions (competition_ID, name, season, country, competition_type) VALUES (4, 'Süper Lig', '2024/2025', 'Türkiye', 'League');
 
--- ==========================================
--- 6. STADIUMS
--- ==========================================
-INSERT INTO stadiums (stadium_id, stadium_name, city, capacity) VALUES
-(1, 'RAMS Park', 'Istanbul', 52223),
-(2, 'Ülker Stadium', 'Istanbul', 50509),
-(3, 'Tüpraş Stadium', 'Istanbul', 41903),
-(4, 'Old Trafford', 'Manchester', 74310),
-(5, 'Anfield', 'Liverpool', 53394);
+-- Matches
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (1, 1, 1, 2, 1, 1001, '2025-09-20 19:00', 2, 1, 51000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (2, 1, 2, 3, 2, 1002, '2025-10-04 20:00', 1, 1, 49000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (3, 1, 3, 1, 3, 1001, '2025-10-25 20:00', 0, 2, 41000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (4, 1, 1, 3, 1, 1002, '2025-11-15 19:00', 3, 0, 60000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (5, 1, 2, 1, 2, 1001, '2025-12-06 20:00', 2, 2, 50000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (6, 1, 3, 2, 3, 1002, '2026-02-14 20:00', 1, 2, 40000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (7, 3, 5, 4, 5, 1003, '2025-10-19 17:30', 3, 1, 53000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (8, 3, 4, 5, 4, 1004, '2026-02-22 16:30', 1, 1, 73000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (9, 2, 1, 3, 1, 1002, '2025-11-22 21:00', 1, 0, 50000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (10, 4, 1, 2, 1, 1001, '2025-04-12 20:00', 1, 1, 51000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (11, 3, 5, 4, 5, 1003, '2026-04-25 18:00', 0, 0, 0);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (12, 1, 1, 2, 1, 1001, '2026-05-25 20:00', 0, 0, 0);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (13, 1, 1, 3, 1, 1002, '2026-06-10 20:00', 0, 0, 0);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (14, 1, 2, 3, 2, 1003, '2026-06-20 19:00', 0, 0, 0);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (15, 2, 1, 3, 1, 1001, '2025-09-30 14:00', 2, 0, 45000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (16, 2, 2, 1, 1, 1002, '2025-09-30 15:00', 1, 1, 46000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (17, 3, 4, 5, 4, 1003, '2025-11-10 19:00', 2, 1, 70000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (18, 1, 1, 2, 1, 1003, '2025-11-10 19:30', 1, 1, 49000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (19, 1, 1, 2, 1, 1001, '2025-12-13 19:00', 2, 0, 50000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (20, 1, 1, 3, 1, 1002, '2026-01-11 19:00', 1, 0, 48000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (21, 1, 2, 1, 2, 1001, '2026-01-25 20:00', 1, 1, 49000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (22, 1, 3, 1, 3, 1002, '2026-02-07 20:00', 0, 1, 40000);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (23, 1, 1, 2, 1, 1001, '2026-03-07 19:00', 0, 0, 0);
+INSERT INTO matches (match_ID, competition_ID, home_club_ID, away_club_ID, stadium_ID, referee_ID, match_datetime, home_goals, away_goals, attendance) VALUES (24, 1, 1, 3, 1, 1002, '2026-04-04 19:00', 0, 0, 0);
 
--- ==========================================
--- 7. CLUBS
--- ==========================================
-INSERT INTO clubs (club_id, club_name, foundation_year, stadium_id, manager_id) VALUES
-(1, 'Galatasaray', 1905, 1, 2001),
-(2, 'Fenerbahçe', 1907, 2, 2002),
-(3, 'Beşiktaş', 1903, 3, 2003),
-(4, 'Manchester United', 1878, 4, 2004),
-(5, 'Liverpool', 1892, 5, NULL);
+-- Contracts
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (1, 1, 1, 'Permanent', 150000.0, '2024-08-15', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (2, 2, 1, 'Permanent', 80000.0, '2023-08-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (3, 3, 1, 'Permanent', 75000.0, '2023-07-15', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (4, 4, 1, 'Permanent', 60000.0, '2022-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (5, 5, 1, 'Permanent', 90000.0, '2024-08-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (6, 6, 1, 'Permanent', 100000.0, '2023-07-01', '2028-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (8, 8, 1, 'Permanent', 70000.0, '2022-09-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (9, 9, 1, 'Permanent', 85000.0, '2023-07-20', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (10, 10, 1, 'Permanent', 65000.0, '2023-08-10', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (11, 11, 1, 'Permanent', 55000.0, '2024-07-15', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (12, 12, 1, 'Permanent', 70000.0, '2023-09-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (13, 13, 1, 'Permanent', 50000.0, '2026-05-31', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (14, 7, 4, 'Permanent', 80000.0, '2023-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (15, 7, 1, 'Loan', 40000.0, '2025-07-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (16, 14, 2, 'Permanent', 95000.0, '2024-07-15', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (17, 15, 2, 'Permanent', 100000.0, '2023-07-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (18, 16, 2, 'Permanent', 55000.0, '2022-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (19, 17, 2, 'Permanent', 65000.0, '2021-07-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (20, 18, 2, 'Permanent', 110000.0, '2023-07-15', '2028-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (21, 19, 2, 'Permanent', 80000.0, '2024-08-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (22, 20, 3, 'Permanent', 90000.0, '2024-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (23, 21, 3, 'Permanent', 60000.0, '2024-08-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (24, 22, 3, 'Permanent', 55000.0, '2022-08-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (25, 23, 3, 'Permanent', 70000.0, '2023-09-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (26, 24, 4, 'Permanent', 300000.0, '2020-01-15', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (27, 25, 4, 'Permanent', 250000.0, '2018-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (28, 26, 4, 'Permanent', 120000.0, '2023-07-01', '2028-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (29, 27, 5, 'Permanent', 400000.0, '2017-07-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (30, 28, 5, 'Permanent', 350000.0, '2018-01-01', '2027-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (31, 1, 4, 'Permanent', 180000.0, '2025-08-01', '2027-08-01');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (32, 29, 1, 'Loan', 50000.0, '2025-09-01', '2026-06-30');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (33, 1, 5, 'Permanent', 150000.0, '2022-08-01', '2024-08-14');
+INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES (34, 14, 1, 'Permanent', 90000.0, '2023-08-15', '2024-07-14');
 
--- ==========================================
--- 8. COMPETITIONS
--- ==========================================
-INSERT INTO competitions (competition_id, name, season, country, competition_type) VALUES
-(1, 'Süper Lig', '2025/2026', 'Türkiye', 'League'),
-(2, 'Türkiye Kupası', '2025/2026', 'Türkiye', 'Cup'),
-(3, 'Premier League', '2025/2026', 'England', 'League'),
-(4, 'Süper Lig', '2024/2025', 'Türkiye', 'League');
+-- Transfer Records
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (1, 1, 5, 1, '2024-08-15', 25000000.0, 'Purchase');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (2, 1, NULL, 5, '2022-08-01', 30000000.0, 'Purchase');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (3, 14, 1, 2, '2024-07-15', 3000000.0, 'Purchase');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (4, 14, NULL, 1, '2023-08-15', 0, 'Free');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (5, 2, NULL, 1, '2023-08-01', 10000000.0, 'Purchase');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (6, 7, 4, 1, '2025-07-01', 2000000.0, 'Loan');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (7, 29, NULL, 1, '2025-09-01', 1500000.0, 'Loan');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (8, 19, NULL, 2, '2024-08-01', 16000000.0, 'Purchase');
+INSERT INTO transfer_record (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES (9, 20, NULL, 3, '2024-07-01', 10000000.0, 'Purchase');
 
--- ==========================================
--- 9. CONTRACTS
--- ==========================================
-INSERT INTO contracts (contract_id, player_id, club_id, contract_type, weekly_wage, start_date, end_date) VALUES
-(1, 1, 1, 'Permanent', 150000, '2024-08-15', '2027-06-30'),
-(2, 2, 1, 'Permanent', 80000, '2023-08-01', '2026-06-30'),
-(3, 3, 1, 'Permanent', 75000, '2023-07-15', '2027-06-30'),
-(4, 4, 1, 'Permanent', 60000, '2022-07-01', '2027-06-30'),
-(5, 5, 1, 'Permanent', 90000, '2024-08-01', '2027-06-30'),
-(6, 6, 1, 'Permanent', 100000, '2023-07-01', '2028-06-30'),
-(8, 8, 1, 'Permanent', 70000, '2022-09-01', '2027-06-30'),
-(9, 9, 1, 'Permanent', 85000, '2023-07-20', '2027-06-30'),
-(10, 10, 1, 'Permanent', 65000, '2023-08-10', '2026-06-30'),
-(11, 11, 1, 'Permanent', 55000, '2024-07-15', '2026-06-30'),
-(12, 12, 1, 'Permanent', 70000, '2021-07-01', '2025-06-30'),
-(13, 13, 1, 'Permanent', 50000, '2024-01-15', '2026-06-30'),
-(14, 14, 2, 'Permanent', 120000, '2024-07-15', '2026-06-30'),
-(15, 15, 2, 'Permanent', 95000, '2023-07-10', '2027-06-30'),
-(16, 16, 2, 'Permanent', 30000, '2023-08-01', '2027-06-30'),
-(17, 17, 2, 'Permanent', 50000, '2021-08-15', '2026-06-30'),
-(18, 18, 2, 'Permanent', 85000, '2023-08-20', '2027-06-30'),
-(19, 19, 2, 'Permanent', 90000, '2024-08-01', '2027-06-30'),
-(20, 20, 3, 'Permanent', 110000, '2024-07-01', '2027-06-30'),
-(21, 21, 3, 'Permanent', 80000, '2022-07-15', '2026-06-30'),
-(22, 22, 3, 'Permanent', 75000, '2023-01-20', '2025-06-30'),
-(23, 23, 4, 'Permanent', 250000, '2020-01-30', '2027-06-30'),
-(24, 24, 4, 'Permanent', 200000, '2016-07-01', '2028-06-30'),
-(25, 25, 4, 'Permanent', 180000, '2022-08-22', '2026-06-30'),
-(26, 26, 5, 'Permanent', 350000, '2017-07-01', '2025-06-30'),
-(27, 27, 5, 'Permanent', 220000, '2018-01-01', '2026-06-30'),
-(28, 28, 5, 'Permanent', 150000, '2023-06-08', '2028-06-30'),
-(29, 29, 1, 'Loan', 120000, '2025-09-01', '2026-06-30'),
-(30, 7, 1, 'Loan', 60000, '2025-07-01', '2026-06-30');
-
--- ==========================================
--- 10. TRANSFER RECORDS
--- ==========================================
-INSERT INTO transfer_records (transfer_id, player_id, from_club_id, to_club_id, transfer_date, transfer_fee, transfer_type) VALUES
-(1, 1, 5, 1, '2024-08-15', 25000000, 'Purchase'),
-(2, 1, NULL, 5, '2022-08-01', 30000000, 'Purchase'),
-(3, 14, 1, 2, '2024-07-15', 3000000, 'Purchase'),
-(4, 14, NULL, 1, '2023-08-15', 0, 'Free'),
-(5, 2, NULL, 1, '2023-08-01', 10000000, 'Purchase'),
-(6, 7, 4, 1, '2025-07-01', 2000000, 'Loan'),
-(7, 29, NULL, 1, '2025-09-01', 1500000, 'Loan'),
-(8, 19, NULL, 2, '2024-08-01', 16000000, 'Purchase'),
-(9, 20, NULL, 3, '2024-07-01', 10000000, 'Purchase');
-
--- ==========================================
--- 11. MATCHES
--- ==========================================
-INSERT INTO matches (match_id, match_date, match_time, stadium_id, home_club_id, away_club_id, referee_id, competition_id, home_goals, away_goals, attendance) VALUES
-(1, '2025-09-20', '19:00:00', 1, 1, 2, 1001, 1, 2, 1, 51000),
-(2, '2025-10-04', '20:00:00', 2, 2, 3, 1002, 1, 1, 1, 49000),
-(3, '2025-10-25', '20:00:00', 3, 3, 1, 1001, 1, 0, 2, 41000),
-(4, '2025-11-15', '19:00:00', 1, 1, 3, 1002, 1, 3, 0, 60000),
-(5, '2025-12-06', '20:00:00', 2, 2, 1, 1001, 1, 2, 2, 50000),
-(6, '2026-02-14', '20:00:00', 3, 3, 2, 1002, 1, 1, 2, 40000),
-(7, '2025-10-19', '17:30:00', 5, 5, 4, 1003, 3, 3, 1, 53000),
-(8, '2026-02-22', '16:30:00', 4, 4, 5, 1004, 3, 1, 1, 73000);
-
--- ==========================================
--- 12. MATCH STATS
--- ==========================================
-INSERT INTO match_stats (match_id, player_id, club_id, is_starter, minutes_played, position_played, goals, assists, yellow_cards, red_cards, rating) VALUES
--- Match 1 Stats
-(1, 4, 1, TRUE, 90, 'GK', 0, 0, 0, 0, 7.4),
-(1, 3, 1, TRUE, 90, 'CB', 0, 0, 0, 0, 7.0),
-(1, 10, 1, TRUE, 90, 'CB', 0, 0, 1, 0, 6.8),
-(1, 9, 1, TRUE, 90, 'RB', 0, 1, 0, 0, 7.5),
-(1, 13, 1, TRUE, 90, 'LB', 0, 0, 0, 0, 6.9),
-(1, 2, 1, TRUE, 90, 'CDM', 0, 0, 0, 0, 7.6),
-(1, 8, 1, TRUE, 90, 'CM', 0, 0, 0, 0, 7.1),
-(1, 5, 1, TRUE, 90, 'RW', 1, 0, 0, 0, 8.2),
-(1, 6, 1, TRUE, 90, 'LW', 0, 1, 0, 0, 7.7),
-(1, 12, 1, TRUE, 90, 'AM', 0, 0, 0, 0, 7.0),
-(1, 1, 1, TRUE, 90, 'ST', 1, 0, 0, 0, 8.0),
-(1, 11, 1, FALSE, 5, 'ST', 0, 0, 0, 0, 7.2),
-(1, 16, 2, TRUE, 90, 'GK', 0, 0, 0, 0, 6.8),
-(1, 17, 2, TRUE, 90, 'RB', 0, 0, 1, 0, 6.5),
--- Match 19 (Örnek Kısa Kesit)
-(19, 15, 2, TRUE, 90, 'AM', 0, 0, 0, 0, 6.8),
-(19, 19, 2, TRUE, 90, 'LW', 0, 0, 0, 0, 6.4),
-(19, 17, 2, TRUE, 90, 'RB', 0, 0, 0, 0, 6.5),
--- Match 20 Stats
-(20, 1, 1, TRUE, 90, 'ST', 1, 0, 0, 0, 8.0),
-(20, 4, 1, TRUE, 90, 'GK', 0, 0, 0, 0, 7.2),
-(20, 10, 1, TRUE, 90, 'CB', 0, 0, 1, 0, 6.5),
-(20, 6, 1, TRUE, 90, 'LW', 0, 0, 0, 0, 7.4),
-(20, 5, 1, TRUE, 90, 'RW', 0, 1, 0, 0, 7.6),
-(20, 9, 1, TRUE, 90, 'RB', 0, 0, 0, 0, 7.1),
-(20, 3, 1, TRUE, 90, 'CB', 0, 0, 0, 0, 7.0),
-(20, 13, 1, TRUE, 90, 'LB', 0, 0, 0, 0, 6.8),
-(20, 8, 1, TRUE, 90, 'CM', 0, 0, 0, 0, 7.2),
-(20, 12, 1, TRUE, 90, 'AM', 0, 0, 0, 0, 7.0),
-(20, 11, 1, TRUE, 90, 'ST', 0, 0, 0, 0, 6.9);
+-- Match Stats
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 1, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (3, 1, 1, 1, 90, 'CB', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (10, 1, 1, 1, 90, 'CB', 0, 0, 1, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (9, 1, 1, 1, 90, 'RB', 0, 1, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (13, 1, 1, 1, 90, 'LB', 0, 0, 0, 0, 6.9);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (2, 1, 1, 1, 90, 'CDM', 0, 0, 0, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (8, 1, 1, 1, 90, 'CM', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 1, 1, 1, 90, 'RW', 1, 0, 0, 0, 8.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 1, 1, 1, 90, 'LW', 0, 1, 0, 0, 7.7);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (12, 1, 1, 1, 90, 'AM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 1, 1, 1, 90, 'ST', 1, 0, 0, 0, 8.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (11, 1, 1, 1, 85, 'ST', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 1, 2, 1, 90, 'GK', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (17, 1, 2, 1, 90, 'RB', 0, 0, 1, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 1, 2, 1, 90, 'CM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (15, 1, 2, 1, 90, 'AM', 0, 1, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (19, 1, 2, 1, 90, 'LW', 0, 0, 0, 0, 6.7);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 1, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 2, 2, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (17, 2, 2, 1, 90, 'RB', 0, 0, 0, 0, 6.9);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 2, 2, 1, 90, 'CM', 1, 0, 0, 0, 7.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (15, 2, 2, 1, 90, 'AM', 0, 1, 1, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (19, 2, 2, 1, 90, 'RW', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 2, 2, 1, 90, 'ST', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 2, 3, 1, 90, 'GK', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (20, 2, 3, 1, 90, 'AM', 1, 0, 0, 0, 8.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 2, 3, 1, 90, 'ST', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (23, 2, 3, 1, 90, 'LW', 0, 1, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 3, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 3, 1, 1, 90, 'RW', 1, 0, 0, 0, 8.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 3, 1, 1, 90, 'ST', 1, 0, 0, 0, 8.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 3, 1, 1, 90, 'LW', 0, 1, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (2, 3, 1, 1, 90, 'CDM', 0, 1, 1, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 3, 3, 1, 90, 'GK', 0, 0, 0, 0, 6.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (20, 3, 3, 1, 90, 'AM', 0, 0, 0, 0, 6.7);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 3, 3, 1, 90, 'ST', 0, 0, 1, 0, 6.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 4, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 4, 1, 1, 90, 'ST', 2, 0, 0, 0, 8.7);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 4, 1, 1, 90, 'RW', 1, 1, 0, 0, 8.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 4, 1, 1, 90, 'LW', 0, 1, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 4, 3, 1, 90, 'GK', 0, 0, 0, 0, 5.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 4, 3, 1, 90, 'ST', 0, 0, 1, 0, 6.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 5, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 5, 1, 1, 90, 'ST', 1, 0, 0, 0, 7.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 5, 1, 1, 90, 'RW', 1, 0, 1, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 5, 1, 1, 80, 'LW', 0, 1, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 5, 2, 1, 90, 'GK', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 5, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 5, 2, 1, 90, 'CM', 1, 1, 1, 0, 7.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (15, 5, 2, 1, 90, 'AM', 0, 1, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 6, 3, 1, 90, 'GK', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (20, 6, 3, 1, 90, 'AM', 1, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 6, 3, 1, 90, 'ST', 0, 1, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 6, 2, 1, 90, 'GK', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 6, 2, 1, 90, 'ST', 2, 0, 0, 0, 8.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 6, 2, 1, 90, 'CM', 0, 1, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (19, 6, 2, 1, 90, 'LW', 0, 1, 1, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (27, 7, 5, 1, 90, 'RW', 3, 0, 0, 0, 9.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (28, 7, 5, 1, 90, 'CB', 0, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (24, 7, 4, 1, 90, 'AM', 1, 0, 1, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (25, 7, 4, 1, 90, 'LW', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (26, 7, 4, 1, 90, 'GK', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (24, 8, 4, 1, 90, 'AM', 1, 0, 0, 0, 8.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (25, 8, 4, 1, 90, 'LW', 0, 1, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (26, 8, 4, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (27, 8, 5, 1, 90, 'RW', 1, 0, 1, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (28, 8, 5, 1, 90, 'CB', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 9, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 9, 1, 1, 90, 'ST', 1, 0, 0, 0, 7.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 9, 1, 1, 90, 'RW', 0, 1, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 9, 3, 1, 90, 'GK', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 9, 3, 1, 90, 'ST', 0, 0, 0, 0, 6.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 10, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 10, 1, 1, 90, 'ST', 1, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 10, 1, 1, 90, 'RW', 0, 1, 1, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 10, 2, 1, 90, 'GK', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 10, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 10, 2, 1, 90, 'CM', 0, 1, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 15, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 15, 1, 1, 90, 'ST', 2, 0, 0, 0, 8.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 16, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 16, 1, 1, 90, 'ST', 1, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (24, 17, 4, 1, 90, 'AM', 2, 0, 0, 0, 9.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (27, 17, 5, 1, 90, 'RW', 1, 0, 0, 0, 7.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 18, 1, 1, 90, 'ST', 1, 0, 0, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 18, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (2, 19, 1, 1, 55, 'CDM', 0, 0, 0, 1, 5.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 19, 1, 1, 90, 'ST', 2, 0, 0, 0, 8.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 19, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 19, 1, 1, 90, 'RW', 0, 1, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (10, 19, 1, 1, 90, 'CB', 0, 0, 1, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 19, 1, 1, 90, 'LW', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (9, 19, 1, 1, 90, 'RB', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (3, 19, 1, 1, 90, 'CB', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (13, 19, 1, 1, 90, 'LB', 0, 0, 0, 0, 6.9);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (8, 19, 1, 1, 90, 'CM', 0, 0, 0, 0, 7.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (12, 19, 1, 1, 90, 'AM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 19, 2, 1, 90, 'GK', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 19, 2, 1, 90, 'ST', 0, 0, 0, 0, 6.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 19, 2, 1, 90, 'CM', 0, 0, 0, 0, 6.7);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (15, 19, 2, 1, 90, 'AM', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (19, 19, 2, 1, 90, 'LW', 0, 0, 0, 0, 6.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (17, 19, 2, 1, 90, 'RB', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 20, 1, 1, 90, 'ST', 1, 0, 0, 0, 8.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 20, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (10, 20, 1, 1, 90, 'CB', 0, 0, 1, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 20, 1, 1, 90, 'LW', 0, 0, 0, 0, 7.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 20, 1, 1, 90, 'RW', 0, 1, 0, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (9, 20, 1, 1, 90, 'RB', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (3, 20, 1, 1, 90, 'CB', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (13, 20, 1, 1, 90, 'LB', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (8, 20, 1, 1, 90, 'CM', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (12, 20, 1, 1, 90, 'AM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (11, 20, 1, 1, 90, 'ST', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 20, 3, 1, 90, 'GK', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 20, 3, 1, 90, 'ST', 0, 0, 0, 0, 6.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (20, 20, 3, 1, 90, 'AM', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (23, 20, 3, 1, 90, 'LW', 0, 0, 0, 0, 6.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (2, 21, 1, 1, 90, 'CDM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 21, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 21, 1, 1, 90, 'ST', 1, 0, 0, 0, 8.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (10, 21, 1, 1, 90, 'CB', 0, 0, 1, 0, 6.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 21, 1, 1, 90, 'RW', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 21, 1, 1, 90, 'LW', 0, 1, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (9, 21, 1, 1, 90, 'RB', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (3, 21, 1, 1, 90, 'CB', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (13, 21, 1, 1, 90, 'LB', 0, 0, 0, 0, 6.9);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (8, 21, 1, 1, 90, 'CM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (12, 21, 1, 1, 90, 'AM', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (16, 21, 2, 1, 90, 'GK', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (14, 21, 2, 1, 90, 'ST', 1, 0, 0, 0, 7.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (18, 21, 2, 1, 90, 'CM', 0, 1, 0, 0, 7.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (15, 21, 2, 1, 90, 'AM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (19, 21, 2, 1, 90, 'LW', 0, 0, 0, 0, 6.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (1, 22, 1, 1, 90, 'ST', 1, 0, 0, 0, 8.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (4, 22, 1, 1, 90, 'GK', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (10, 22, 1, 1, 90, 'CB', 0, 0, 1, 0, 6.4);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (2, 22, 1, 1, 90, 'CDM', 0, 0, 0, 1, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (6, 22, 1, 1, 90, 'LW', 0, 1, 0, 0, 7.6);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (5, 22, 1, 1, 90, 'RW', 0, 0, 0, 0, 7.3);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (9, 22, 1, 1, 90, 'RB', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (3, 22, 1, 1, 90, 'CB', 0, 0, 0, 0, 7.1);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (13, 22, 1, 1, 90, 'LB', 0, 0, 0, 0, 6.9);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (8, 22, 1, 1, 90, 'CM', 0, 0, 0, 0, 7.0);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (12, 22, 1, 1, 90, 'AM', 0, 0, 0, 0, 7.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (22, 22, 3, 1, 90, 'GK', 0, 0, 0, 0, 6.5);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (21, 22, 3, 1, 90, 'ST', 0, 0, 0, 0, 5.8);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (20, 22, 3, 1, 90, 'AM', 0, 0, 0, 0, 6.2);
+INSERT INTO match_stats (player_ID, match_ID, club_ID, is_starter, minutes_played, position_in_match, goals, assists, yellow_cards, red_cards, rating) VALUES (23, 22, 3, 1, 90, 'LW', 0, 0, 0, 0, 6.0);
