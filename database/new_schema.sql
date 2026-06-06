@@ -80,7 +80,7 @@ CREATE TABLE contracts (
 contract_id INT AUTO_INCREMENT PRIMARY KEY,
 player_id INT NOT NULL,
 club_id INT NOT NULL,
-start_date DATE NOT NULL,
+start_date DATE ,
 end_date DATE NOT NULL,
 weekly_wage DECIMAL(15, 2) NOT NULL CHECK (weekly_wage > 0),
 contract_type ENUM('Permanent', 'Loan') NOT NULL,
