@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 ## how to set up the connections:
 
-write the following information in a .env file
+write the following information in a .env file (with your local daabase user information)
 
 ```bash
 DB_HOST= 127.0.0.1
@@ -24,16 +24,17 @@ DB_NAME= db
 ## how to set up the database:
 
 ```python
-# for seting up schema and views
-make setup
+# for starting mysql
+make start_mysql
 
-# for adding triggers
-make db USER=user FILE=database/triggers.sql 
-# write the user password
+# for seting up schema and views and triggers
+make schemas
 ```
 
 ## how to start the server:
 
 ```bash
-make
+make start
 ```
+
+Then you can go to the given link in terminal to acces the application with the given data (initial4.sql)

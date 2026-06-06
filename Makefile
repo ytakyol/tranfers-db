@@ -10,12 +10,12 @@ endif
 DB_USER ?= $(DB_USER)
 DB_PASS ?= $(DB_PASS)
 
-default: main
+default: start
 
 install:
 	pip install -r requirements.txt
 
-main: app.py 
+start: app.py 
 	python3 app.py
 
 start_mysql: 
